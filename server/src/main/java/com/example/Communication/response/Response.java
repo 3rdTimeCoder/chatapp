@@ -18,6 +18,15 @@ public class Response {
         this.result = result;
         this.data = data;
      }
+
+     /**
+     * Returns the result associated with the response.
+     *
+     * @return The result associated with the response.
+     */
+     public String getResult() {
+         return result;
+     }
     
      /**
      * Returns the data associated with the response.

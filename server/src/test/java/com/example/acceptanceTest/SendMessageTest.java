@@ -44,8 +44,8 @@ public class SendMessageTest {
 
         assertNotNull(response.get("result"));
         assertEquals("OK", response.get("result").asText());
-        assertNotNull(response.get("result").get("data"));
-        JsonNode data = response.get("result").get("data");
+        assertNotNull(response.get("data"));
+        JsonNode data = response.get("data");
         assertEquals("testGroup010", data.get("group_id").asText());
         assertEquals("message sent", data.get("message").asText());
 

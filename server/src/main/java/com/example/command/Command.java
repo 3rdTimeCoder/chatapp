@@ -9,25 +9,25 @@ import com.example.Communication.response.Response;
 
 public abstract class Command {
     private final String name;
-    private static JsonNode arguments;
+    // private static JsonNode arguments;
 
     public Command(String name){
         this.name = name.trim().toLowerCase();
-        arguments = null;
+        // arguments = null;
     }
 
-    public Command(String name, JsonNode args) {
-        this(name);
-        arguments = args;
-    }
+    // public Command(String name, JsonNode args) {
+    //     this(name);
+    //     // arguments = args;
+    // }
 
     public String getName() {                                                                      
         return name;
     }
 
-    public JsonNode getArgs() {
-        return arguments;
-    }
+    // public JsonNode getArgs() {
+    //     return arguments;
+    // }
 
     /**
      * Creates a Command object based on the provided request string.
@@ -43,7 +43,7 @@ public abstract class Command {
         JsonNode requestJson = JsonHandler.deserializeJsonString(request);
         String command = requestJson.get("command").asText();
         String username = requestJson.get("username").asText();
-        arguments = requestJson.get("arguments");
+        JsonNode args = requestJson.get("arguments");
         
 
         // TODO: signup, login, logout, sendMessage, deleteMessage, editMessage
@@ -53,7 +53,7 @@ public abstract class Command {
             case "logout":
                 return new Logout();
             case "send_message":
-                return new SendMessage();
+                return new SendMessage(args);
             case "delete_message":
                 return new DeleteMessage();
             case "edit_message":

@@ -35,6 +35,7 @@ public class ClientHandler implements Runnable {
         } 
         catch (Exception e) {
             closeEverything(socket, inputStream, outputStream);
+            System.out.println("A client has disconnected!");
         }
     }
 
@@ -45,18 +46,18 @@ public class ClientHandler implements Runnable {
         while (socket.isConnected()) {
             try {
                 request = getRequestFromClient();
-                System.out.println("request: " + request);
-                if (JsonHandler.isJsonString(request)) {
+                if (request != null && !request.isBlank() && JsonHandler.isJsonString(request)) {
+                    System.out.println("request: " + request);
                     handleRequest(request);
+                    continue;
                 }
-            } 
-            catch (Exception e) {
-                closeEverything(socket, inputStream, outputStream);
                 break;
-            }
+            } 
+            catch (Exception e) { break; }
         }
 
          // if client disconnects unexpecedly.
+         System.out.println("A client has disconnected!");
          closeEverything(socket, inputStream, outputStream);
          removeClientHandler();
     }
@@ -78,17 +79,12 @@ public class ClientHandler implements Runnable {
     
     public void handleRequest(String request) {
         try {
-            System.out.println("request in handleRequest: " + request);
             Command newCommand = Command.create(request);
             Response response = newCommand.execute(this);
 
             String responseJsonString = JsonHandler.serializeResponse(response);
+            System.out.println("response: " + responseJsonString);
             sendToClient(responseJsonString);
-
-            // // if command is 'quit' disconnect everything.
-            // if (currentCommand.equals("quit")) {
-            //     closeEverything(getSocket(), inputStream, outputStream);
-            // }
 
         } 
         catch (IllegalArgumentException e) {
