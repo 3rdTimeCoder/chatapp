@@ -11,11 +11,11 @@ public class Data {
         this.message = message;
     }
 
-    public HashMap getData() {
-        return new HashMap<>() {{ 
-            put("group_id", groupId);
-            put("message", message);
-        }};
+    public HashMap<String, String> getData() {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("group_id", groupId);
+        data.put("message", message);
+        return data;
     }
 
     @Override

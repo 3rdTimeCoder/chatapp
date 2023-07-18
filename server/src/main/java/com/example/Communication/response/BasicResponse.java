@@ -9,7 +9,13 @@ public class BasicResponse extends Response {
      *
      * @param message The message associated with the response.
      */
-    public BasicResponse(String message) {
-        super("OK", new HashMap<>() {{ put("message", message); }});
+    public BasicResponse(String result, String message) {
+        super(result, getMap(message));
+    }
+
+    private static HashMap<String, String> getMap(String message) {
+        HashMap<String, String> messageMap = new HashMap<>();
+        messageMap.put("message", message);
+        return messageMap;
     }
 }

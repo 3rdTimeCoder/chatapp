@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.List;
 
 import com.example.Communication.json.JsonHandler;
 import com.example.command.Command;
-import com.example.Communication.response.ErrorResponse;
+import com.example.Communication.response.BasicResponse;
 import com.example.Communication.response.Response;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ClientHandler implements Runnable {
 
@@ -25,12 +23,15 @@ public class ClientHandler implements Runnable {
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
+            this.outputStream = socket.getOutputStream();
+            this.inputStream = socket.getInputStream();
+
             clientHanders.add(this);
 
             // handle initial 'connect' request
-            // String initialRequest = getRequestFromClient();
-            // System.out.println("req: " + initialRequest);
-            // handleRequest(initialRequest);
+            String initialRequest = getRequestFromClient();
+            System.out.println("req: " + initialRequest);
+            handleRequest(initialRequest);
         } 
         catch (Exception e) {
             closeEverything(socket, inputStream, outputStream);
@@ -91,7 +92,7 @@ public class ClientHandler implements Runnable {
 
         } 
         catch (IllegalArgumentException e) {
-            ErrorResponse errorResponse = new ErrorResponse("Unsupported command");
+            Response errorResponse = new BasicResponse("Error", "Unsupported command");
             String responseJsonString = JsonHandler.serializeResponse(errorResponse);
             sendToClient(responseJsonString);
         }
