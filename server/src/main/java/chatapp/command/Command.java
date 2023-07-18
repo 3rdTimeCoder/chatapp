@@ -3,9 +3,8 @@ package chatapp.command;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import chatapp.ClientHandler;
-
-import chatapp.Communication.json.JsonHandler;
-import chatapp.Communication.response.Response;
+import chatapp.communication.json.JsonHandler;
+import chatapp.communication.response.Response;
 
 
 public abstract class Command {

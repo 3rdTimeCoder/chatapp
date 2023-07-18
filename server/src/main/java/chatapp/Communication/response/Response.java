@@ -1,4 +1,4 @@
-package chatapp.Communication.response;
+package chatapp.communication.response;
 
 import java.util.HashMap;
 

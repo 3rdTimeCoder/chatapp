@@ -6,17 +6,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import chatapp.Communication.json.JsonHandler;
 import chatapp.command.Command;
-import chatapp.Communication.response.BasicResponse;
-import chatapp.Communication.response.Response;
+import chatapp.communication.json.JsonHandler;
+import chatapp.communication.response.BasicResponse;
+import chatapp.communication.response.Response;
 
 import java.util.ArrayList;
 
 public class ClientHandler implements Runnable {
 
     private Socket socket;
-    private String username;
+    private String username = "admin";
     private InputStream inputStream;
     private OutputStream outputStream;
     public static ArrayList<ClientHandler> clientHanders = new ArrayList<>();
@@ -38,6 +38,10 @@ public class ClientHandler implements Runnable {
             closeEverything(socket, inputStream, outputStream);
             System.out.println("A client has disconnected!");
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     @Override
