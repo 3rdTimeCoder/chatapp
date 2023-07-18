@@ -1,7 +1,7 @@
-package com.example.acceptanceTest;
+package chatapp.acceptanceTest;
 
-import com.example.acceptanceTest.resources.RobotWorldClient;
-import com.example.acceptanceTest.resources.RobotWorldJsonClient;
+import chatapp.acceptanceTest.resources.RobotWorldClient;
+import chatapp.acceptanceTest.resources.RobotWorldJsonClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.junit.jupiter.api.Test;

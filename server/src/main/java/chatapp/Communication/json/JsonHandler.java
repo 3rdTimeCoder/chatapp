@@ -1,8 +1,8 @@
-package com.example.Communication.json;
+package chatapp.Communication.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.Communication.response.Response;
+import chatapp.Communication.response.Response;
 
 import java.io.IOException;
 

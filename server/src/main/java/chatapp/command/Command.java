@@ -1,10 +1,11 @@
-package com.example.command;
+package chatapp.command;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.example.ClientHandler;
-import com.example.Communication.json.JsonHandler;
-import com.example.Communication.response.Response;
+import chatapp.ClientHandler;
+
+import chatapp.Communication.json.JsonHandler;
+import chatapp.Communication.response.Response;
 
 
 public abstract class Command {

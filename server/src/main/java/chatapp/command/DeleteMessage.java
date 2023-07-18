@@ -1,14 +1,15 @@
-package com.example.command;
+package chatapp.command;
 
 import java.util.HashMap;
 
-import com.example.ClientHandler;
-import com.example.Communication.response.Response;
+import chatapp.Communication.response.Response;
 
-public class EditMessage extends Command{
+import chatapp.ClientHandler;
 
-    public EditMessage() {
-        super("editMessage");
+public class DeleteMessage extends Command{
+
+    public DeleteMessage() {
+        super("deleteMessage");
     }
 
     @Override

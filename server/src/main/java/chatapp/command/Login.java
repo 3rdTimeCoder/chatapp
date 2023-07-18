@@ -1,9 +1,10 @@
-package com.example.command;
+package chatapp.command;
 
 import java.util.HashMap;
 
-import com.example.ClientHandler;
-import com.example.Communication.response.Response;
+import chatapp.Communication.response.Response;
+
+import chatapp.ClientHandler;
 
 public class Login extends Command{
 

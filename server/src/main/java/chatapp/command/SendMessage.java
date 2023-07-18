@@ -1,12 +1,12 @@
-package com.example.command;
+package chatapp.command;
 
 import java.util.HashMap;
 
-import com.example.ClientHandler;
-import com.example.Communication.response.Data;
-import com.example.Communication.response.Data;
-import com.example.Communication.response.Response;
+import chatapp.Communication.response.Data;
+import chatapp.Communication.response.Response;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import chatapp.ClientHandler;
 
 public class SendMessage extends Command{
     private JsonNode args;

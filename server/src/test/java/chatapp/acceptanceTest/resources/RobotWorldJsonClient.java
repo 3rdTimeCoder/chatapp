@@ -1,4 +1,4 @@
-package com.example.acceptanceTest.resources;
+package chatapp.acceptanceTest.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -1,4 +1,4 @@
-package com.example.configuration;
+package chatapp.configuration;
 
 public class Config {
     

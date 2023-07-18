@@ -1,14 +1,15 @@
-package com.example;
+package chatapp;
+
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.example.Communication.json.JsonHandler;
-import com.example.command.Command;
-import com.example.Communication.response.BasicResponse;
-import com.example.Communication.response.Response;
+import chatapp.Communication.json.JsonHandler;
+import chatapp.command.Command;
+import chatapp.Communication.response.BasicResponse;
+import chatapp.Communication.response.Response;
 
 import java.util.ArrayList;
 

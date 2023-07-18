@@ -1,6 +1,6 @@
-package com.example.user;
+package chatapp.user;
 
-import com.example.ClientHandler;
+import chatapp.ClientHandler;
 
 public class User {
     

@@ -1,4 +1,4 @@
-package com.example;
+package chatapp;
 
 import static org.junit.Assert.assertTrue;
 
