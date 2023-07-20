@@ -2,3 +2,7 @@ target/*
 new/*
 server/target/*
 client/target/*
+server/*.sql
+server/*.sqbpro
+.vscode/*
+dbtest/*
