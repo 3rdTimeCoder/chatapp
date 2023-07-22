@@ -6,3 +6,5 @@ server/*.sql
 server/*.sqbpro
 .vscode/*
 dbtest/*
+robotWorlds
+chatapp_old.db
