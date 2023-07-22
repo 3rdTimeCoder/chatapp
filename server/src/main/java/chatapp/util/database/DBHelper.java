@@ -227,6 +227,7 @@ public class DBHelper {
         String query = "SELECT * FROM groups";
         return ReadData(query);
     }
+
     
     /**
      * Fetches a specific group from the 'groups' table based on the given groupId and returns it as a string array.
@@ -244,12 +245,28 @@ public class DBHelper {
         return new String[]{};
     }
 
+
+    /**
+     * Fetches all address book entries from the 'address_book' table and returns them as a list of string arrays.
+     *
+     * @return A list of string arrays representing all address book entries.
+     * @throws SQLException if a database access error occurs
+     */
     public static List<String[]> fetchAddressBook() throws SQLException {
         String query = "SELECT * FROM address_book";
         return ReadData(query);
     }
 
-    // fetches all the groups a user is a participant in(userGroups = true) or all the participants in a single group.
+    
+    /**
+     * Fetches all groups a user is a participant in (userGroups = true)
+     * or all the participants in a single group (userGroups = false).
+     *
+     * @param id The ID of the user or group.
+     * @param userGroups  If true, fetches all groups the user is a participant in. If false, fetches all participants of the group.
+     * @return A list of string arrays representing the user IDs or group IDs based on the specified condition.
+     * @throws SQLException if a database access error occurs
+     */
     public static List<String[]> fetchAddressBook(int id, boolean userGroups) throws SQLException {
         String query =  userGroups? 
             "SELECT DISTINCT group_id FROM address_book " + "WHERE user_id = " + id :
@@ -257,20 +274,38 @@ public class DBHelper {
         return ReadData(query);
     }
 
+
+    /**
+     * Fetches all messages sent to a specific group from the 'messages' table.
+     *
+     * @param groupId The ID of the group to fetch messages for.
+     * @return A list of string arrays representing the messages sent to the group.
+     * @throws SQLException if a database access error occurs
+     */
     public static List<String[]> fetchMessagesInGroup(int groupId) throws SQLException {
         String query = "SELECT * FROM messages " + "WHERE receiver_id = " + groupId;
         return ReadData(query);
     }
 
-    // UPDATE
+
+    // =============================================================== UPDATE ================================================================
+
+    /**
+     * Updates a user's information in the 'users' table.
+     *
+     * @param user_id The ID of the user to update.
+     * @param updateColumn The name of the column to update (e.g., 'username', 'email', 'password').
+     * @param updateValue The new value to set for the specified column.
+     * @throws SQLException if a database access error occurs
+     */
     private static void updateUser(int user_id, String updateColumn, String updateValue) throws SQLException {
         connectToDB();
-        String query = "UPDATE users " + "SET ? = ? " + "WHERE user_id = ?";
+        String query = getQuery(updateColumn);
 
         try (final PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, updateColumn);
-            stmt.setString(2, updateValue);
-            stmt.setInt(3, user_id);
+            // stmt.setString(1, updateColumn);
+            stmt.setString(1, updateValue);
+            stmt.setInt(2, user_id);
             final boolean gotAResultSet = stmt.execute();
             if (gotAResultSet) {
                 throw new RuntimeException("Expected no SQL resultset.");
@@ -284,8 +319,20 @@ public class DBHelper {
         disconnectFromDB();
     }
 
-    // DELETE
-    // for when a user want to leave a group.
+    private static String getQuery(String updateColumn) {
+        return "UPDATE users " + "SET " + updateColumn + " = ? " + "WHERE user_id = ?";
+    }
+
+    // ============================================================== DELETE ===============================================================
+    
+    // for when a user leaves a group.
+    /**
+     * Deletes an address book entry for a user in a group from the 'address_book' table.
+     *
+     * @param user_id   The ID of the user in the address book entry.
+     * @param group_id  The ID of the group in the address book entry.
+     * @throws SQLException if a database access error occurs
+     */
     private static void deleteAddressBookEntry(int user_id, int group_id) throws SQLException {
         connectToDB();
         String query = "DELETE FROM address_book " + "WHERE user_id = ? AND group_id = ?";
@@ -306,10 +353,19 @@ public class DBHelper {
         disconnectFromDB();
     }
 
+
+    // ============================================================ HELPER METHODS ==========================================================
+
+    /**
+     * helper method to print a string array.
+     */
     private static void printArray(String[] arr) {
         System.out.println(Arrays.toString(arr));
     }
 
+    /**
+     * Helper method to display the result of a database query (list of string arrays).
+     */
     private static void displayQueryResult(List<String[]> queryResult) {
         for (String[] row : queryResult) {
                 printArray(row);
@@ -321,18 +377,7 @@ public class DBHelper {
     
     public static void main(String[] args) {
         try {
-            // displayQueryResult(fetchAddressBook(2, false));
-            // displayQueryResult(fetchMessagesInGroup(2));
-            // createUser("JohnnyTest03", "JohnnyTest03@email.com", Encrypt.encryptPassword("password"));
-            // createGroup("The 13th Floor", 4);
-            // createAddressBookEntry(3, 1);
-            // createMessage(5, 2,"Hello!!!!!!");
-            // displayQueryResult(fetchAllGroups());
-            // printArray(fetchUser(4));
-            // deleteAddressBookEntry(3, 1);
-            // printArray(fetchGroup(1));
-            // displayQueryResult(fetchAddressBook(3, true));
-            displayQueryResult(fetchAddressBook(1, false));
+            displayQueryResult(fetchAllUsers());
             
         } 
         catch (SQLException e) {
