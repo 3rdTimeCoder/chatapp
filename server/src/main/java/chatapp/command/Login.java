@@ -25,7 +25,7 @@ public class Login extends Command{
         String password = args.get("password").asText();
         String encryptedPassword = Encrypt.encryptPassword(password);
 
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         String message = "";
         String result = "";
 

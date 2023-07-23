@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Response {
 
     private String result;
-    private HashMap<String, String> data;
+    private HashMap<String, Object> data;
 
      /**
      * Constructs a Response object with the specified result and data.
@@ -14,7 +14,7 @@ public class Response {
      * @param data   The data associated with the response.
      */
  
-     public Response(String result, HashMap<String, String> data) {
+     public Response(String result, HashMap<String, Object> data) {
         this.result = result;
         this.data = data;
      }
@@ -33,7 +33,7 @@ public class Response {
      *
      * @return The data associated with the response.
      */
-    public HashMap<String, String> getData() {
+    public HashMap<String, Object> getData() {
         return data;
     }
 

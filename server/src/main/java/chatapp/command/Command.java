@@ -56,6 +56,8 @@ public abstract class Command {
                 return new Logout();
             case "send_message":
                 return new SendMessage(args);
+            case "get_messages":
+                return new GetMessages(args);
             case "delete_message":
                 return new DeleteMessage(args);
             case "edit_message":

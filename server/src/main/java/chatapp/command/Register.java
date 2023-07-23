@@ -28,7 +28,7 @@ public class Register extends Command{
         String encryptedPassword = Encrypt.encryptPassword(password);
         System.out.println("arguments: " + args);
 
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         String message = "";
         String result = "";
 

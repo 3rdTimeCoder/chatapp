@@ -269,9 +269,9 @@ public class DBHelper {
      * @return A list of string arrays representing the messages sent to the group.
      * @throws SQLException if a database access error occurs
      */
-    public static List<String[]> fetchMessagesInGroup(int groupId) throws SQLException {
-        String query = "SELECT * FROM messages WHERE receiver_id = ?";
-        return executeSelectQuery(query, groupId);
+    public static List<String[]> fetchMessagesInGroup(String groupName) throws SQLException {
+        String query = "SELECT * FROM messages WHERE receiver_name = ?";
+        return executeSelectQuery(query, groupName);
     }
 
     /**

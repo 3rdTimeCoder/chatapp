@@ -13,8 +13,8 @@ public class BasicResponse extends Response {
         super(result, getMap(message));
     }
 
-    private static HashMap<String, String> getMap(String message) {
-        HashMap<String, String> messageMap = new HashMap<>();
+    private static HashMap<String, Object> getMap(String message) {
+        HashMap<String, Object> messageMap = new HashMap<>();
         messageMap.put("message", message);
         return messageMap;
     }
