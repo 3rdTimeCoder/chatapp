@@ -17,6 +17,7 @@ public class ClientHandler implements Runnable {
 
     private Socket socket;
     private String username = "admin";
+    private int userId = 1;
     private InputStream inputStream;
     private OutputStream outputStream;
     public static ArrayList<ClientHandler> clientHanders = new ArrayList<>();
@@ -42,6 +43,18 @@ public class ClientHandler implements Runnable {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setUserID(int userId) {
+        this.userId = userId;
+    }
+
+    public int getUserID() {
+        return userId;
     }
 
     @Override
@@ -90,14 +103,13 @@ public class ClientHandler implements Runnable {
             String responseJsonString = JsonHandler.serializeResponse(response);
             System.out.println("response: " + responseJsonString);
             sendToClient(responseJsonString);
-
         } 
         catch (IllegalArgumentException e) {
             Response errorResponse = new BasicResponse("Error", "Unsupported command");
             String responseJsonString = JsonHandler.serializeResponse(errorResponse);
             sendToClient(responseJsonString);
         }
-        catch (NullPointerException e) {}
+        catch (NullPointerException e) { System.out.println(e.getMessage()); }
     }
 
     /**
@@ -107,9 +119,11 @@ public class ClientHandler implements Runnable {
      */
     public void sendToClient(String message) {
         try {
+            System.out.println("response to send: " + message);
             this.outputStream.write(message.getBytes());
         } 
         catch (IOException e) {
+            System.out.println(e.getMessage());
             closeEverything(socket, inputStream, outputStream);
         }
     }

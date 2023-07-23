@@ -3,18 +3,18 @@ package chatapp.communication.response;
 import java.util.HashMap;
 
 public class Data {
-    private String groupId;
+    private String groupName;
     private String message;
     private HashMap<String, String> data;
     
-    public Data(String groupId, String message) {
-        this.groupId = groupId;
+    public Data(String groupName, String message) {
+        this.groupName = groupName;
         this.message = message;
         this.data = new HashMap<>();
     }
 
     public HashMap<String, String> getData() {
-        data.put("group_id", groupId);
+        data.put("group_name", groupName);
         data.put("message", message);
         return data;
     }
@@ -26,7 +26,7 @@ public class Data {
     @Override
     public String toString() {
         return "{\n" +
-                "\tgroup_id: '" + groupId + '\'' + ",\n" +
+                "\tgroup_name: '" + groupName + '\'' + ",\n" +
                 "\tmessage: '" + message + '\'' + ",\n" +
                 "}";
     }

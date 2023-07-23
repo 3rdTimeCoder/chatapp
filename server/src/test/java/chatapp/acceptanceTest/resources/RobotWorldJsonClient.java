@@ -56,11 +56,20 @@ public class RobotWorldJsonClient implements RobotWorldClient {
             out.flush(); // this
 
             System.out.println("sent");
+
+            System.out.println("waiting for response...");
+            String response = in.readLine();
+            System.out.println("response: " + response);
             
-            return OBJECT_MAPPER.readTree(in.readLine());
+            return OBJECT_MAPPER.readTree(response);
         } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error parsing server response as JSON.", e);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Error reading server response.", e);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error reading server response.", e);
         }
     }

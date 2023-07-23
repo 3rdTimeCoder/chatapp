@@ -33,10 +33,10 @@ public class SendMessageTest {
         assertTrue(serverClient.isConnected());
 
         String request = "{" +
-                "\"username\": \"testing\"," +
+                "\"username\": \"admin\"," +
                 "\"command\": \"send_message\"," +
                 "\"arguments\": {" + 
-                                "\"group_id\": \"testGroup010\"," +
+                                "\"group_name\": \"TestGroup\"," +
                                 "\"message\": \"Hello, this is a test...\"" +
                                 "}" +
                 "}";
@@ -46,8 +46,7 @@ public class SendMessageTest {
         assertEquals("OK", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("testGroup010", data.get("group_id").asText());
+        assertEquals("TestGroup", data.get("group_name").asText());
         assertEquals("message sent", data.get("message").asText());
-
     }
 }

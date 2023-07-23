@@ -132,9 +132,9 @@ public class DBHelper {
      * @param message The content of the message.
      * @throws SQLException if a database access error occurs
      */
-    public static void createMessage(int sender_id, int receiver_id, String message) throws SQLException {
-        String query = "INSERT INTO messages(sender_id, receiver_id, message, datetime_sent) VALUES (?, ?, ?, datetime('now'))";
-        executeUpdateQuery(query, sender_id, receiver_id, message);
+    public static void createMessage(int sender_id, String receiver_name, String message) throws SQLException {
+        String query = "INSERT INTO messages(sender_id, receiver_name, message, datetime_sent) VALUES (?, ?, ?, datetime('now'))";
+        executeUpdateQuery(query, sender_id, receiver_name, message);
     }
 
     /**
@@ -220,13 +220,13 @@ public class DBHelper {
     /**
      * Fetches a specific group from the 'groups' table based on the given groupId and returns it as a string array.
      *
-     * @param groupId The ID of the group to fetch.
+     * @param groupName The name of the group to fetch.
      * @return A string array representing the group information, or an empty array if the group is not found.
      * @throws SQLException if a database access error occurs
      */
-    public static String[] fetchGroup(int groupId) throws SQLException {
-        String query = "SELECT * FROM groups WHERE group_id = ?";
-        List<String[]> groups = executeSelectQuery(query, groupId);
+    public static String[] fetchGroup(String groupName) throws SQLException {
+        String query = "SELECT * FROM groups WHERE group_name = ?";
+        List<String[]> groups = executeSelectQuery(query, groupName);
         if (!groups.isEmpty()) {
             return groups.get(0);
         }

@@ -28,13 +28,15 @@ public class Login extends Command{
         HashMap<String, String> data = new HashMap<>();
         String message = "";
         String result = "";
-        
+
         try {
             String[] user = DBHelper.fetchUser(username);
             System.out.println("user from database: " + user);
             if (!(user.length == 0) && user[3].equals(encryptedPassword)) { 
                 result = "OK";
                 message = "login successful"; 
+                clientHandler.setUsername(username);
+                clientHandler.setUserID(Integer.parseInt(user[0]));
             }
             else if (!(user.length == 0) && !user[3].equals(encryptedPassword)) {
                 result = "ERROR";
