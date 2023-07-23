@@ -1,14 +1,17 @@
 package chatapp.command;
 
-import java.util.HashMap;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import chatapp.ClientHandler;
 import chatapp.communication.response.Response;
 
 public class DeleteMessage extends Command{
+    private JsonNode args;
 
-    public DeleteMessage() {
+    public DeleteMessage(JsonNode args) {
         super("deleteMessage");
+        this.args = args;
     }
 
     @Override

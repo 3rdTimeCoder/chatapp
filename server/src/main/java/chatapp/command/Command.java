@@ -49,7 +49,6 @@ public abstract class Command {
         // TODO: signup, login, logout, sendMessage, deleteMessage, editMessage
         switch (command){
             case "register":
-                System.out.println("register");
                 return new Register(args);
             case "login":
                 return new Login(args);
@@ -58,9 +57,9 @@ public abstract class Command {
             case "send_message":
                 return new SendMessage(args);
             case "delete_message":
-                return new DeleteMessage();
+                return new DeleteMessage(args);
             case "edit_message":
-                return new EditMessage();
+                return new EditMessage(args);
             default:
                 throw new IllegalArgumentException("Uknown request: " + command);
         }

@@ -31,11 +31,12 @@ public class SendMessage extends Command{
 
         // Query the database for all members of the group using the 'group_id'
         String[] group = findGroup(groupName);
+        int messageID = 0;
         if (group.length != 0) {
             try {
                 String[] user = DBHelper.fetchUser(clientHandler.getUsername());
                 System.out.println("user: " + user);
-                DBHelper.createMessage(Integer.parseInt(user[0]), groupName, message);
+                messageID = DBHelper.createMessage(Integer.parseInt(user[0]), groupName, message);
                 participants = DBHelper.fetchAddressBook(Integer.parseInt(group[0]), false);
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -49,7 +50,7 @@ public class SendMessage extends Command{
 
         for (ClientHandler client : ClientHandler.clientHanders) {
             if (participantsList.contains(client.getUserID()) && client != clientHandler) {
-                sendMessage(clientHandler, groupName, client, message);
+                sendMessage(clientHandler, groupName, client, message, messageID);
             }
         }
         
@@ -68,9 +69,10 @@ public class SendMessage extends Command{
         return group;
     }
 
-    private void sendMessage(ClientHandler sender, String groupName, ClientHandler participant, String message) {
+    private void sendMessage(ClientHandler sender, String groupName, ClientHandler participant, String message, int messageID) {
         Data data = new Data(groupName, message);
         data.addToData("sender", sender.getUsername());
+        data.addToData("message_id", String.valueOf(messageID));
         Response response = new Response("OK", data.getData());
         String responseJson = JsonHandler.serializeResponse(response);
         participant.sendToClient(responseJson);

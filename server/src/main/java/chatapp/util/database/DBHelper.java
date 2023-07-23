@@ -132,9 +132,11 @@ public class DBHelper {
      * @param message The content of the message.
      * @throws SQLException if a database access error occurs
      */
-    public static void createMessage(int sender_id, String receiver_name, String message) throws SQLException {
+    public static int createMessage(int sender_id, String receiver_name, String message) throws SQLException {
         String query = "INSERT INTO messages(sender_id, receiver_name, message, datetime_sent) VALUES (?, ?, ?, datetime('now'))";
         executeUpdateQuery(query, sender_id, receiver_name, message);
+        int message_id = fetchMessageId(sender_id, receiver_name, message);
+        return message_id;
     }
 
     /**
@@ -272,6 +274,22 @@ public class DBHelper {
         return executeSelectQuery(query, groupId);
     }
 
+    /**
+     * Fetches a specific message from the 'messages' table.
+     *
+     * @param sender_id The ID of the sender of the message.
+     * @param receiver_name The name of the group it was sent to.
+     * @param message The message whose ID we're looking for.
+     * @return The ID of the message.
+     * @throws SQLException if a database access error occurs
+     */
+    private static int fetchMessageId(int sender_id, String receiver_name, String message) throws SQLException {
+        String query = "SELECT message_id FROM messages WHERE sender_id = ? AND receiver_name = ? AND message = ?";
+        List<String[]> queryResult = executeSelectQuery(query, sender_id, receiver_name, message);
+        int id = Integer.parseInt(queryResult.get(0)[0]);
+        return id;
+    }
+
     // =============================================================== UPDATE ================================================================
 
     /**
@@ -338,9 +356,10 @@ public class DBHelper {
         try {
             // displayQueryResult(fetchMessagesInGroup(2));
             // displayQueryResult(fetchAddressBook(1, false));
-            printArray(fetchUser(1));
+            // printArray(fetchUser(1));
             // createUser("admin", "whatever@email.com", "testing");
-            deleteUser("JohnWick7");
+            // deleteUser("JohnWick7");
+            System.out.println(fetchMessageId(1, "TestGroup", "Hello, World!"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
