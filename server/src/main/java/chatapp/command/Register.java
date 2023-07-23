@@ -10,50 +10,44 @@ import chatapp.communication.response.Response;
 import chatapp.util.database.DBHelper;
 import chatapp.util.encryption.Encrypt;
 
-public class Login extends Command{
+public class Register extends Command{
 
     private JsonNode args;
 
-    public Login(JsonNode args) {
-        super("login");
+    public Register(JsonNode args) {
+        super("register");
         this.args = args;
     }
 
     @Override
     public Response execute(ClientHandler clientHandler) {
+
         String username = args.get("username").asText();
+        String email = args.get("email").asText();
         String password = args.get("password").asText();
         String encryptedPassword = Encrypt.encryptPassword(password);
+        System.out.println("arguments: " + args);
 
         HashMap<String, String> data = new HashMap<>();
         String message = "";
         String result = "";
-        
+
         try {
-            String[] user = DBHelper.fetchUser(username);
-            System.out.println("user from database: " + user);
-            if (!(user.length == 0) && user[3].equals(encryptedPassword)) { 
-                result = "OK";
-                message = "login successful"; 
-            }
-            else if (!(user.length == 0) && !user[3].equals(encryptedPassword)) {
-                result = "ERROR";
-                message = "Incorrect password";
-            }
-            else {
-                result = "ERROR";
-                message = "User not Found";
-            }
-         
+            DBHelper.createUser(username, email, encryptedPassword);
+            result = "OK";
+            message = "Registration successful.";
         } catch (SQLException e) {
+            String errorMessage = e.getMessage();
             System.out.println(e.getMessage());
             result = "ERROR";
-            message = "An Error Occured";
-        }
+            if (errorMessage.contains("users.username")) {
+                message = "Registration unsuccessful. Username already exists.";
+            }else{
+                message = "Registration unsuccessful. Email already exists.";
+            }
+        } 
 
         data.put("message", message);
         return new Response(result, data);
     }
-    
-    
 }

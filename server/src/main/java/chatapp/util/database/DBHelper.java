@@ -48,8 +48,8 @@ public class DBHelper {
         try {
             connection = connectToDB();
             try (final PreparedStatement stmt = connection.prepareStatement(query)) {
-                for (int i = 1; i <= params.length; i++) {
-                    stmt.setObject(i, params[i]);
+                for (int i = 0; i < params.length; i++) {
+                    stmt.setObject(i+1, params[i]);
                 }
                 int updateCount = stmt.executeUpdate();
                 if (updateCount == 1) {
@@ -191,6 +191,22 @@ public class DBHelper {
     }
 
     /**
+     * Fetches a specific user from the 'users' table based on the given username and returns it as a string array.
+     *
+     * @param username The username of the user to fetch.
+     * @return A string array representing the user information, or an empty array if the user is not found.
+     * @throws SQLException if a database access error occurs
+     */
+    public static String[] fetchUser(String username) throws SQLException {
+        String query = "SELECT * FROM users WHERE username = ?";
+        List<String[]> users = executeSelectQuery(query, username);
+        if (!users.isEmpty()) {
+            return users.get(0);
+        }
+        return new String[]{};
+    }
+
+    /**
      * Fetches all groups from the 'groups' table and returns them as a list of string arrays.
      *
      * @return A list of string arrays representing all groups.
@@ -281,9 +297,20 @@ public class DBHelper {
      * @param group_id  The ID of the group in the address book entry.
      * @throws SQLException if a database access error occurs
      */
-    private static void deleteAddressBookEntry(int user_id, int group_id) throws SQLException {
+    public static void deleteAddressBookEntry(int user_id, int group_id) throws SQLException {
         String query = "DELETE FROM address_book WHERE user_id = ? AND group_id = ?";
         executeUpdateQuery(query, user_id, group_id);
+    }
+
+    /**
+     * Deletes a user from the database.
+     *
+     * @param username The username of the user to remove.
+     * @throws SQLException if a database access error occurs
+     */
+    public static void deleteUser(String username) throws SQLException {
+        String query = "DELETE FROM users WHERE username = ?";
+        executeUpdateQuery(query, username);
     }
 
     // ============================================================ HELPER METHODS ==========================================================
@@ -309,8 +336,11 @@ public class DBHelper {
 
     public static void main(String[] args) {
         try {
-            displayQueryResult(fetchMessagesInGroup(2));
+            // displayQueryResult(fetchMessagesInGroup(2));
             // displayQueryResult(fetchAddressBook(1, false));
+            printArray(fetchUser(1));
+            // createUser("admin", "whatever@email.com", "testing");
+            deleteUser("JohnWick7");
         } catch (SQLException e) {
             e.printStackTrace();
         }

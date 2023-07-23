@@ -2,6 +2,8 @@ package chatapp.acceptanceTest;
 
 import chatapp.acceptanceTest.resources.RobotWorldClient;
 import chatapp.acceptanceTest.resources.RobotWorldJsonClient;
+import chatapp.util.database.DBHelper;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
+
+import java.sql.SQLException;
 
 
 public class LoginAndRegistrationTest {
@@ -34,9 +38,9 @@ public class LoginAndRegistrationTest {
                 "\"username\": \"JohnWick7\"," +
                 "\"command\": \"register\"," +
                 "\"arguments\": {" + 
-                                "\"username\": \"JohnWick7\"" +
-                                "\"email\": \"JohnWick7@email.com\"" +
-                                "\"password\": \"#johnWick7\"," +
+                                "\"username\": \"JohnWick7\"," +
+                                "\"email\": \"JohnWick7@email.com\"," +
+                                "\"password\": \"#johnWick7\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -45,7 +49,15 @@ public class LoginAndRegistrationTest {
         assertEquals("OK", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("Registration successful", data.get("message").asText());
+        assertEquals("Registration successful.", data.get("message").asText());
+
+        // Delete JohnWick7 after test:
+        try {
+            DBHelper.deleteUser("JohnWick7");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        assertTrue(true);
     }
 
     @Test
@@ -56,9 +68,9 @@ public class LoginAndRegistrationTest {
                 "\"username\": \"admin\"," +
                 "\"command\": \"register\"," +
                 "\"arguments\": {" + 
-                                "\"username\": \"admin\"" +
-                                "\"email\": \"whatever@email.com\"" +
-                                "\"password\": \"#johnWick7\"," +
+                                "\"username\": \"admin\"," +
+                                "\"email\": \"whatever@email.com\"," +
+                                "\"password\": \"#johnWick7\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -67,7 +79,8 @@ public class LoginAndRegistrationTest {
         assertEquals("ERROR", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("Registration unsuccessful. Username already exists.", data.get("message").asText());
+        assertEquals("Registration unsuccessful. Username already exists.", 
+                    data.get("message").asText());
     }
 
     @Test
@@ -78,9 +91,9 @@ public class LoginAndRegistrationTest {
                 "\"username\": \"admin03\"," +
                 "\"command\": \"register\"," +
                 "\"arguments\": {" + 
-                                "\"username\": \"admin03\"" +
-                                "\"email\": \"admin@email.com\"" +
-                                "\"password\": \"#johnWick7\"," +
+                                "\"username\": \"admin03\"," +
+                                "\"email\": \"admin@email.com\"," +
+                                "\"password\": \"#johnWick7\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -89,19 +102,20 @@ public class LoginAndRegistrationTest {
         assertEquals("ERROR", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("Registration unsuccessful. Email already exists.", data.get("message").asText());
+        assertEquals("Registration unsuccessful. Email already exists.", 
+                    data.get("message").asText());
     }
 
     @Test
-    void loginSuccessful(){
+    void loginWithUsernameSuccessful(){
         assertTrue(serverClient.isConnected());
 
         String request = "{" +
                 "\"username\": \"admin\"," +
                 "\"command\": \"login\"," +
                 "\"arguments\": {" + 
-                                "\"password\": \"password\"," +
-                                // "\"message\": \"Hello, this is a test...\"" +
+                                "\"username\": \"admin\"," +
+                                "\"password\": \"password\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -115,15 +129,15 @@ public class LoginAndRegistrationTest {
     }
 
     @Test
-    void loginFailed(){
+    void loginWrongPassword(){
         assertTrue(serverClient.isConnected());
 
         String request = "{" +
                 "\"username\": \"admin\"," +
                 "\"command\": \"login\"," +
                 "\"arguments\": {" + 
-                                "\"password\": \"wrongPassword\"," +
-                                // "\"message\": \"Hello, this is a test...\"" +
+                                "\"username\": \"admin\"," +
+                                "\"password\": \"wrongPassword\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -132,7 +146,27 @@ public class LoginAndRegistrationTest {
         assertEquals("ERROR", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("login unsuccessful", data.get("message").asText());
+        assertEquals("Incorrect password", data.get("message").asText());
+    }
 
+    @Test
+    void loginNonExistentUsername(){
+        assertTrue(serverClient.isConnected());
+
+        String request = "{" +
+                "\"username\": \"doesNotExist\"," +
+                "\"command\": \"login\"," +
+                "\"arguments\": {" + 
+                                "\"username\": \"doesNotExist\"," +
+                                "\"password\": \"password\"" +
+                                "}" +
+                "}";
+        JsonNode response = serverClient.sendRequest(request);
+
+        assertNotNull(response.get("result"));
+        assertEquals("ERROR", response.get("result").asText());
+        assertNotNull(response.get("data"));
+        JsonNode data = response.get("data");
+        assertEquals("User not Found", data.get("message").asText());
     }
 }

@@ -48,8 +48,11 @@ public abstract class Command {
 
         // TODO: signup, login, logout, sendMessage, deleteMessage, editMessage
         switch (command){
+            case "register":
+                System.out.println("register");
+                return new Register(args);
             case "login":
-                return new Login();
+                return new Login(args);
             case "logout":
                 return new Logout();
             case "send_message":
