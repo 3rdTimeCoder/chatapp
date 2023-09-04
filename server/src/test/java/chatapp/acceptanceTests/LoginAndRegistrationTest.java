@@ -1,7 +1,8 @@
-package chatapp.acceptanceTest;
+package chatapp.acceptanceTests;
 
-import chatapp.acceptanceTest.resources.RobotWorldClient;
-import chatapp.acceptanceTest.resources.RobotWorldJsonClient;
+import chatapp.Server;
+import chatapp.acceptanceTests.resources.RobotWorldClient;
+import chatapp.acceptanceTests.resources.RobotWorldJsonClient;
 import chatapp.util.database.DBHelper;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 
@@ -22,6 +24,7 @@ public class LoginAndRegistrationTest {
 
     @BeforeEach
     void connectToServer(){
+        serverClient.connect(DEFAULT_IP, DEFAULT_PORT);
         serverClient.connect(DEFAULT_IP, DEFAULT_PORT);
     }
 

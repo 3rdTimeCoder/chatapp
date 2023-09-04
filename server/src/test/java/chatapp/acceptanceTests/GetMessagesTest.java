@@ -1,7 +1,9 @@
-package chatapp.acceptanceTest;
+package chatapp.acceptanceTests;
 
-import chatapp.acceptanceTest.resources.RobotWorldClient;
-import chatapp.acceptanceTest.resources.RobotWorldJsonClient;
+import chatapp.Server;
+import chatapp.acceptanceTests.resources.RobotWorldClient;
+import chatapp.acceptanceTests.resources.RobotWorldJsonClient;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
-public class SendMessageTest {
+import java.io.IOException;
+
+public class GetMessagesTest {
     private final static int DEFAULT_PORT = 8147;
     private final static String DEFAULT_IP = "localhost";
     private final RobotWorldClient serverClient = new RobotWorldJsonClient();
@@ -26,15 +30,14 @@ public class SendMessageTest {
     }
 
     @Test
-    void sendBasicMessage(){
+    void getMessagesFromTestGroup(){
         assertTrue(serverClient.isConnected());
 
         String request = "{" +
                 "\"username\": \"admin\"," +
-                "\"command\": \"send_message\"," +
+                "\"command\": \"get_messages\"," +
                 "\"arguments\": {" + 
-                                "\"group_name\": \"TestGroup\"," +
-                                "\"message\": \"Hello, this is a test...\"" +
+                                "\"group_name\": \"TestGroup\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
@@ -44,6 +47,6 @@ public class SendMessageTest {
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
         assertEquals("TestGroup", data.get("group_name").asText());
-        assertEquals("message sent", data.get("message").asText());
+        assertNotNull(data.get("messages"));
     }
 }

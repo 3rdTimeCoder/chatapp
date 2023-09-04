@@ -1,4 +1,4 @@
-package chatapp.acceptanceTest.resources;
+package chatapp.acceptanceTests.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
