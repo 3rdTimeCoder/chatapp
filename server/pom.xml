@@ -6,7 +6,7 @@
 
   <groupId>com.example</groupId>
   <artifactId>server</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>server</name>
   <!-- FIXME change it to the project's website -->
@@ -56,29 +56,33 @@
 
   <build>
     <plugins>
-      <!-- Plugin for shading and relocating dependencies -->
+      <!-- Plugin for creating server JAR with dependencies -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
-        <configuration>
-          <shadedArtifactAttached>true</shadedArtifactAttached>
-          <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-          <transformers>
-            <transformer
-              implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-              <resource>META-INF/services/java.sql.Driver</resource>
-            </transformer>
-          </transformers>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.3.0</version>
+          <!-- Configuration for the server JAR -->
+          <configuration>
+              <finalName>server-${project.version}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <archive>
+                  <manifest>
+                      <mainClass>chatapp.Server</mainClass>
+                  </manifest>
+              </archive>
+              <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+          </configuration>
+          <executions>
+              <execution>
+                  <id>create-server-jar</id>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>single</goal>
+                  </goals>
+              </execution>
+          </executions>
       </plugin>
     </plugins>
 

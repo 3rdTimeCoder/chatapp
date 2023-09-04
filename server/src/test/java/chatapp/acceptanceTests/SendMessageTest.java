@@ -1,6 +1,5 @@
 package chatapp.acceptanceTests;
 
-import chatapp.Server;
 import chatapp.acceptanceTests.resources.RobotWorldClient;
 import chatapp.acceptanceTests.resources.RobotWorldJsonClient;
 
@@ -12,16 +11,14 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 
 public class SendMessageTest {
-    private final static int DEFAULT_PORT = 8147;
+    private final static int DEFAULT_PORT = 5000;
     private final static String DEFAULT_IP = "localhost";
     private final RobotWorldClient serverClient = new RobotWorldJsonClient();
 
     @BeforeEach
     void connectToServer(){
-        serverClient.connect(DEFAULT_IP, DEFAULT_PORT);
         serverClient.connect(DEFAULT_IP, DEFAULT_PORT);
     }
 

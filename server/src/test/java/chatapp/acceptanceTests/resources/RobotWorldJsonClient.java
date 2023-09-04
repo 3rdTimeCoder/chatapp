@@ -20,7 +20,6 @@ public class RobotWorldJsonClient implements RobotWorldClient {
     @Override
     public void connect(String ipAddress, int port) {
         try {
-            System.out.println(ipAddress+ " " +  port);
             socket = new Socket(ipAddress, port);
             out = new PrintStream(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(
