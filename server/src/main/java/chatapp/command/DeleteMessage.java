@@ -16,7 +16,6 @@ public class DeleteMessage extends Command{
 
     @Override
     public Response execute(ClientHandler clientHandler) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }
     

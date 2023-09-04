@@ -11,6 +11,12 @@ public class JsonHandler {
     
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Serializes a Response object to a JSON string.
+     *
+     * @param response The Response object to be serialized.
+     * @return A JSON string representing the serialized Response object, or null if an error occurs.
+     */
     public static String serializeResponse(Response response) {
         String jsonString = null;
         try {
@@ -21,6 +27,12 @@ public class JsonHandler {
         return jsonString;
     }
 
+    /**
+     * Deserializes a JSON string into a JsonNode object.
+     *
+     * @param jsonString The JSON string to be deserialized.
+     * @return A JsonNode object representing the deserialized JSON data, or null if an error occurs.
+     */
     public static JsonNode deserializeJsonString(String jsonString) {
         JsonNode jsonNode = null;
         try{
@@ -32,6 +44,12 @@ public class JsonHandler {
         return jsonNode;
     }
 
+    /**
+     * Checks if a given string is a valid JSON string.
+     *
+     * @param string The input string to be checked.
+     * @return true if the input string is a valid JSON string, false otherwise.
+     */
     public static Boolean isJsonString(String string) {
         try {
             objectMapper.readTree(string);

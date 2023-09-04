@@ -31,7 +31,6 @@ public class Server {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 showClientConnected(socket.getInetAddress().getHostName());
-                // create a clientHandler & sprouts a sperate thread for communicating with client.
                 ClientHandler clientHandler = new ClientHandler(socket); 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
