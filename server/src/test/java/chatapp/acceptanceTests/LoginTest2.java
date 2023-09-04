@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.*;
 
 
-public class LoginTest {
+public class LoginTest2 {
     private final static int DEFAULT_PORT = 5000;
     private final static String DEFAULT_IP = "localhost";
     private final RobotWorldClient serverClient = new RobotWorldJsonClient();
@@ -28,7 +28,7 @@ public class LoginTest {
     }
 
     @Test
-    void loginWithUsernameSuccessful(){
+    void loginWrongPassword(){
         assertTrue(serverClient.isConnected());
 
         String request = "{" +
@@ -36,16 +36,17 @@ public class LoginTest {
                 "\"command\": \"login\"," +
                 "\"arguments\": {" + 
                                 "\"username\": \"admin\"," +
-                                "\"password\": \"password\"" +
+                                "\"password\": \"wrongPassword\"" +
                                 "}" +
                 "}";
         JsonNode response = serverClient.sendRequest(request);
+        System.out.println(response);
 
         assertNotNull(response.get("result"));
-        assertEquals("OK", response.get("result").asText());
+        assertEquals("ERROR", response.get("result").asText());
         assertNotNull(response.get("data"));
         JsonNode data = response.get("data");
-        assertEquals("login successful", data.get("message").asText());
+        assertEquals("Incorrect password", data.get("message").asText());
         System.out.println("Done");
     }
 }
