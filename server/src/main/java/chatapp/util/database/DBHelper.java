@@ -358,8 +358,8 @@ public class DBHelper {
             // displayQueryResult(fetchAddressBook(1, false));
             // printArray(fetchUser(1));
             // createUser("admin", "whatever@email.com", "testing");
-            // deleteUser("JohnWick7");
-            System.out.println(fetchMessageId(1, "TestGroup", "Hello, World!"));
+            deleteUser("JohnWick7");
+            // System.out.println(fetchMessageId(1, "TestGroup", "Hello, World!"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

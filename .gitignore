@@ -8,3 +8,4 @@ server/*.sqbpro
 dbtest/*
 robotWorlds
 chatapp_old.db
+*.txt

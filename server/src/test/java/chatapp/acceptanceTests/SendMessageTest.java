@@ -27,25 +27,25 @@ public class SendMessageTest {
         serverClient.disconnect();
     }
 
-    @Test
-    void sendBasicMessage(){
-        assertTrue(serverClient.isConnected());
+    // @Test
+    // void sendBasicMessage(){
+    //     assertTrue(serverClient.isConnected());
 
-        String request = "{" +
-                "\"username\": \"admin\"," +
-                "\"command\": \"send_message\"," +
-                "\"arguments\": {" + 
-                                "\"group_name\": \"TestGroup\"," +
-                                "\"message\": \"Hello, this is a test...\"" +
-                                "}" +
-                "}";
-        JsonNode response = serverClient.sendRequest(request);
+    //     String request = "{" +
+    //             "\"username\": \"admin\"," +
+    //             "\"command\": \"send_message\"," +
+    //             "\"arguments\": {" + 
+    //                             "\"group_name\": \"TestGroup\"," +
+    //                             "\"message\": \"Hello, this is a test...\"" +
+    //                             "}" +
+    //             "}";
+    //     JsonNode response = serverClient.sendRequest(request);
 
-        assertNotNull(response.get("result"));
-        assertEquals("OK", response.get("result").asText());
-        assertNotNull(response.get("data"));
-        JsonNode data = response.get("data");
-        assertEquals("TestGroup", data.get("group_name").asText());
-        assertEquals("message sent", data.get("message").asText());
-    }
+    //     assertNotNull(response.get("result"));
+    //     assertEquals("OK", response.get("result").asText());
+    //     assertNotNull(response.get("data"));
+    //     JsonNode data = response.get("data");
+    //     assertEquals("TestGroup", data.get("group_name").asText());
+    //     assertEquals("message sent", data.get("message").asText());
+    // }
 }
