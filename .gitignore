@@ -9,3 +9,4 @@ dbtest/*
 robotWorlds
 chatapp_old.db
 *.txt
+.idea
