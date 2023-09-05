@@ -1,7 +1,7 @@
 name: Chatapp Build, Test & Deploy
 
 on:
-  push:
+  release:
     branches: main
 
 jobs:
