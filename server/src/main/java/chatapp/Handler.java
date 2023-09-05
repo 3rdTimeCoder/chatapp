@@ -17,6 +17,7 @@ public class Handler {
 
     public static void signup(Context context) {
         System.out.println(context.body());
+        
     }
     
     public static void getAllGroups(Context context) {
