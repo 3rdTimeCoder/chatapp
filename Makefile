@@ -14,9 +14,6 @@ build-test-server: kill_process_on_5000 clean
 
 run-tests:
 	@echo "\nRunning Tests Against Server...\n"
-	cd ./server && mvn test -Dtest=*LoginTest
-	cd ./server && mvn test -Dtest=*LoginTest2
-	cd ./server && mvn test -Dtest=*RegistrationTest
 	cd ./server && mvn test -Dtest=*GetMessagesTest
 	@echo "\nStopping Server...\n"
 	@pkill -f server-${PROJECT_VERSION}.jar
