@@ -1,49 +1,50 @@
 package chatapp.acceptanceTests;
 
-import chatapp.acceptanceTests.resources.RobotWorldClient;
-import chatapp.acceptanceTests.resources.RobotWorldJsonClient;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import org.junit.jupiter.api.Test;
+
+import chatapp.APIServer;
+import chatapp.communication.json.JsonHandler;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.Assert.*;
 
 public class GetMessagesTest {
-    private final static int DEFAULT_PORT = 5000;
-    private final static String DEFAULT_IP = "localhost";
-    private final RobotWorldClient serverClient = new RobotWorldJsonClient();
+
+    private final APIServer SERVER = new APIServer();
 
     @BeforeEach
     void connectToServer(){
-        serverClient.connect(DEFAULT_IP, DEFAULT_PORT);
+        SERVER.start(5050);
     }
 
     @AfterEach
     void disconnectFromServer(){
-        serverClient.disconnect();
+        SERVER.stop();
+        Unirest.shutDown();
     }
 
     @Test
     void getMessagesFromTestGroup(){
-        assertTrue(serverClient.isConnected());
+        HttpResponse<JsonNode> response = Unirest.get("http://localhost:5050/v1/groups/getMessages/TestGroup").asJson(); 
+        assertEquals(200, response.getStatus()); 
 
-        String request = "{" +
-                "\"username\": \"admin\"," +
-                "\"command\": \"get_messages\"," +
-                "\"arguments\": {" + 
-                                "\"group_name\": \"TestGroup\"" +
-                                "}" +
-                "}";
-        JsonNode response = serverClient.sendRequest(request);
+        com.fasterxml.jackson.databind.JsonNode resBody = JsonHandler.deserializeJsonString(response.getBody().toString());
+        assertNotNull(resBody.get("result").asText());
+        assertEquals("OK", resBody.get("result").asText());
+        assertNotNull(resBody.get("data"));
 
-        assertNotNull(response.get("result"));
-        assertEquals("OK", response.get("result").asText());
-        assertNotNull(response.get("data"));
-        JsonNode data = response.get("data");
-        assertEquals("TestGroup", data.get("group_name").asText());
+        com.fasterxml.jackson.databind.JsonNode data = resBody.get("data");
+        assertNotNull(data.get("groupname").asText());
+        assertEquals("TestGroup", data.get("groupname").asText());
         assertNotNull(data.get("messages"));
+        assertNotNull(data.get("message"));
+        assertEquals("retrieved messages from TestGroup", data.get("message").asText());
     }
 }

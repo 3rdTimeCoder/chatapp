@@ -14,7 +14,7 @@ public class Data {
     }
 
     public HashMap<String, Object> getData() {
-        data.put("group_name", groupName);
+        data.put("groupname", groupName);
         data.put("message", message);
         return data;
     }
@@ -28,6 +28,7 @@ public class Data {
         return "{\n" +
                 "\tgroup_name: '" + groupName + '\'' + ",\n" +
                 "\tmessage: '" + message + '\'' + ",\n" +
+                "\tmessages: '" + data + '\'' + ",\n" +
                 "}";
     }
 

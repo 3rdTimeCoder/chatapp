@@ -3,6 +3,8 @@ package chatapp;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import org.json.JSONObject;
+
 import chatapp.communication.response.BasicResponse;
 import chatapp.communication.response.Response;
 import chatapp.util.database.DBHelper;
@@ -15,6 +17,10 @@ public class Handler {
 
     private static String createReqBody(String command, Context context) {
         return "{\"command\":\"" + command + "\",\"arguments\":" + context.body() + "}";
+    }
+
+    private static String createReqBody(String command, JSONObject arguments) {
+        return "{\"command\":\"" + command + "\",\"arguments\":" + arguments + "}";
     }
 
     public static void login(Context context) {
@@ -40,4 +46,18 @@ public class Handler {
             context.json(new BasicResponse("ERROR", "An error occurried while fetching groups.")); 
         }
     }
+
+    public static void getMessages(Context context) {
+        JSONObject args = new JSONObject();
+        String groupname = context.pathParamAsClass("groupname", String.class).get();
+        args.put("groupname", groupname);
+        String reqBody = createReqBody("get_messages", args);
+        String response = ClientHandler.handleClientRequest(reqBody);
+        System.out.println();
+        // System.out.println("2: " + response);
+        // System.out.println();
+        context.json(response);
+    }
+
 } 
+

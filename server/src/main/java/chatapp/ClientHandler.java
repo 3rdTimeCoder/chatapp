@@ -122,7 +122,7 @@ public class ClientHandler implements Runnable {
             Response response = newCommand.execute(null);
 
             String responseJsonString = JsonHandler.serializeResponse(response);
-            System.out.println("response: " + responseJsonString);
+            // System.out.println("response: " + responseJsonString);
             return responseJsonString;
         }
         catch (IllegalArgumentException e) { 

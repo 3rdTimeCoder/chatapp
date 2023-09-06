@@ -43,7 +43,6 @@ public abstract class Command {
         JsonNode requestJson = JsonHandler.deserializeJsonString(request);
         String command = requestJson.get("command").asText();
         System.out.println("Command: " + command);
-        // String username = requestJson.get("username").asText();
         JsonNode args = requestJson.get("arguments");
         System.out.println("Arguments: " + args);
         
