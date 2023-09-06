@@ -41,6 +41,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public ClientHandler() {
+        clientHanders.add(this);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -110,6 +114,26 @@ public class ClientHandler implements Runnable {
             sendToClient(responseJsonString);
         }
         catch (NullPointerException e) { System.out.println(e.getMessage()); }
+    }
+
+    public static String handleClientRequest(String request) {
+        try{
+            Command newCommand = Command.create(request);
+            Response response = newCommand.execute(null);
+
+            String responseJsonString = JsonHandler.serializeResponse(response);
+            System.out.println("response: " + responseJsonString);
+            return responseJsonString;
+        }
+        catch (IllegalArgumentException e) { 
+            return createErrorResponse("Unsupported Request");
+        }
+        catch (NullPointerException e) { return createErrorResponse(e.getMessage()); }
+    }
+
+    public static String createErrorResponse(String message) {
+        Response errorResponse = new BasicResponse("Error", message);
+        return JsonHandler.serializeResponse(errorResponse);
     }
 
     /**
