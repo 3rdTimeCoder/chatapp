@@ -5,7 +5,6 @@ import io.javalin.Javalin;
 public class APIServer {
     private final Javalin server;
     private final String urlPrefix = "/v1/";
-    // private static ClientHandler clientHandler;
 
     public APIServer() {
         server = Javalin.create(config -> {
@@ -19,18 +18,11 @@ public class APIServer {
 
     public void start(int port) {
         this.server.start(port);
-        // clientHandler = new ClientHandler(); 
-        // Thread thread = new Thread(clientHandler);
-        // thread.start();
     }
 
     public void stop() {
         this.server.stop();
     }
-
-    // public static ClientHandler getClientHandler() {
-    //     return clientHandler;
-    // }
 
     public static void main(String[] args) {
         APIServer server = new APIServer();

@@ -42,10 +42,10 @@ public abstract class Command {
         // deserialize the request string into a Json node and then extract the info you need.
         JsonNode requestJson = JsonHandler.deserializeJsonString(request);
         String command = requestJson.get("command").asText();
-        System.out.println("\nCommand: " + command);
+        System.out.println("Command: " + command);
         // String username = requestJson.get("username").asText();
         JsonNode args = requestJson.get("arguments");
-        System.out.println("\nArguments: " + args);
+        System.out.println("Arguments: " + args);
         
 
         // TODO: signup, login, logout, sendMessage, deleteMessage, editMessage

@@ -72,6 +72,13 @@
     </dependency>
   </dependencies>
 
+  <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.9.0</version>
+  </dependency>
+
+
   <build>
     <plugins>
       <!-- Plugin for creating server JAR with dependencies -->

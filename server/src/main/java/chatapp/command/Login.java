@@ -1,6 +1,7 @@
 package chatapp.command;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,12 +32,12 @@ public class Login extends Command{
 
         try {
             String[] user = DBHelper.fetchUser(username);
-            System.out.println("user from database: " + user);
+            // System.out.println("user from database: " + Arrays.toString(user));
             if (!(user.length == 0) && user[3].equals(encryptedPassword)) { 
                 result = "OK";
                 message = "login successful"; 
-                clientHandler.setUsername(username);
-                clientHandler.setUserID(Integer.parseInt(user[0]));
+                // clientHandler.setUsername(username);
+                // clientHandler.setUserID(Integer.parseInt(user[0]));
             }
             else if (!(user.length == 0) && !user[3].equals(encryptedPassword)) {
                 result = "ERROR";
