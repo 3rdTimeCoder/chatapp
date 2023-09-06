@@ -53,7 +53,7 @@ public class DBHelper {
                 }
                 int updateCount = stmt.executeUpdate();
                 if (updateCount == 1) {
-                    System.out.println("1 row affected.");
+                    System.out.println("Done.");
                 } else {
                     throw new RuntimeException("Expected 1 row to be affected, but got " + updateCount);
                 }

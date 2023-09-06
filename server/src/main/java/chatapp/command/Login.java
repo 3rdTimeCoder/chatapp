@@ -1,7 +1,6 @@
 package chatapp.command;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
