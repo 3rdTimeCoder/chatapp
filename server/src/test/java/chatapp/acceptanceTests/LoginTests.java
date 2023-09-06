@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import chatapp.APIServer;
 import chatapp.communication.json.JsonHandler;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
@@ -28,6 +27,7 @@ public class LoginTests {
     @AfterEach
     void disconnectFromServer(){
         SERVER.stop();
+        Unirest.shutDown();
     }
 
     @Test
@@ -39,7 +39,6 @@ public class LoginTests {
         "}";
 
         HttpResponse<JsonNode> response = Unirest.post("http://localhost:5050/v1/login").body(reqString).asJson(); 
-        assertTrue(true);
         assertEquals(200, response.getStatus()); 
 
         com.fasterxml.jackson.databind.JsonNode respBody = JsonHandler.deserializeJsonString(response.getBody().toString());
@@ -56,12 +55,12 @@ public class LoginTests {
         "}";
 
         HttpResponse<JsonNode> response = Unirest.post("http://localhost:5050/v1/login").body(reqString).asJson(); 
-        assertTrue(true);
         assertEquals(200, response.getStatus()); 
 
         com.fasterxml.jackson.databind.JsonNode respBody = JsonHandler.deserializeJsonString(response.getBody().toString());
         assertEquals("ERROR", respBody.get("result").asText()); 
         assertEquals("Incorrect password", respBody.get("data").get("message").asText()); 
+        
     }
 
     @Test
@@ -72,8 +71,7 @@ public class LoginTests {
             "\"password\":\"password\"" +
         "}";
 
-        HttpResponse<JsonNode> response = Unirest.post("http://localhost:5050/v1/login").body(reqString).asJson(); 
-        assertTrue(true);
+        HttpResponse<JsonNode> response = Unirest.post("http://localhost:5050/v1/login").body(reqString).asJson();
         assertEquals(200, response.getStatus()); 
 
         com.fasterxml.jackson.databind.JsonNode respBody = JsonHandler.deserializeJsonString(response.getBody().toString());
