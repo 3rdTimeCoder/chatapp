@@ -43,7 +43,7 @@ public class Handler {
         } 
         catch (SQLException e) { 
             context.status(HttpCode.NOT_FOUND);
-            context.json(new BasicResponse("ERROR", "An error occurried while fetching groups.")); 
+            context.json(new BasicResponse("ERROR", "An error occurred while fetching groups.")); 
         }
     }
 
