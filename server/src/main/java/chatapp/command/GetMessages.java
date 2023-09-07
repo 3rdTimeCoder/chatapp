@@ -2,7 +2,6 @@ package chatapp.command;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -39,9 +38,6 @@ public class GetMessages extends Command{
         
         Data data = new Data(groupName, "retrieved messages from " + groupName);
         data.addToData("messages", messages.toString());
-        // HashMap<String, Object> data = new HashMap<>();
-        // data.put("groupname", groupName);
-        // data.put("messages", messages.toString());
         return new Response("OK", data.getData());
     }
 

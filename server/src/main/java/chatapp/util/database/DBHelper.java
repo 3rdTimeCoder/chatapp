@@ -132,10 +132,10 @@ public class DBHelper {
      * @param message The content of the message.
      * @throws SQLException if a database access error occurs
      */
-    public static int createMessage(int sender_id, String receiver_name, String message) throws SQLException {
-        String query = "INSERT INTO messages(sender_id, receiver_name, message, datetime_sent) VALUES (?, ?, ?, datetime('now'))";
-        executeUpdateQuery(query, sender_id, receiver_name, message);
-        int message_id = fetchMessageId(sender_id, receiver_name, message);
+    public static int createMessage(String sender_name, String receiver_name, String message) throws SQLException {
+        String query = "INSERT INTO messages(sender_name, receiver_name, message, datetime_sent) VALUES (?, ?, ?, datetime('now'))";
+        executeUpdateQuery(query, sender_name, receiver_name, message);
+        int message_id = fetchMessageId(sender_name, receiver_name, message);
         return message_id;
     }
 
@@ -283,9 +283,9 @@ public class DBHelper {
      * @return The ID of the message.
      * @throws SQLException if a database access error occurs
      */
-    private static int fetchMessageId(int sender_id, String receiver_name, String message) throws SQLException {
-        String query = "SELECT message_id FROM messages WHERE sender_id = ? AND receiver_name = ? AND message = ?";
-        List<String[]> queryResult = executeSelectQuery(query, sender_id, receiver_name, message);
+    private static int fetchMessageId(String sender_name, String receiver_name, String message) throws SQLException {
+        String query = "SELECT message_id FROM messages WHERE sender_name = ? AND receiver_name = ? AND message = ?";
+        List<String[]> queryResult = executeSelectQuery(query, sender_name, receiver_name, message);
         int id = Integer.parseInt(queryResult.get(0)[0]);
         return id;
     }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import chatapp.ClientHandler;
 import chatapp.communication.json.JsonHandler;
+import chatapp.communication.response.BasicResponse;
 import chatapp.communication.response.Data;
 import chatapp.communication.response.Response;
 import chatapp.util.database.DBHelper;
@@ -23,36 +24,38 @@ public class SendMessage extends Command{
     @Override
     public Response execute(ClientHandler clientHandler) {
 
-        String groupName = args.get("group_name").asText();
+        String username = args.get("username").asText();
+        String groupName = args.get("groupname").asText();
         String message = args.get("message").asText();
 
         System.out.println("args: " +  args);
-        List<String[]> participants =  new ArrayList<>();
+        // List<String[]> participants =  new ArrayList<>();
 
         // Query the database for all members of the group using the 'group_id'
         String[] group = findGroup(groupName);
         int messageID = 0;
         if (group.length != 0) {
             try {
-                String[] user = DBHelper.fetchUser(clientHandler.getUsername());
+                String[] user = DBHelper.fetchUser(username);
                 System.out.println("user: " + user);
-                messageID = DBHelper.createMessage(Integer.parseInt(user[0]), groupName, message);
-                participants = DBHelper.fetchAddressBook(Integer.parseInt(group[0]), false);
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                messageID = DBHelper.createMessage(user[1], groupName, message);
+                // participants = DBHelper.fetchAddressBook(Integer.parseInt(group[0]), false);
+            } 
+            catch (SQLException e) {
+                return new BasicResponse("ERROR", "An error occurred while sending message.");
             }
         }
         // Send the message to all members in in the group.
-        List<Integer> participantsList = new ArrayList<>();
-        for (String[] participant : participants) {
-            participantsList.add(Integer.parseInt(participant[0]));
-        }
+        // List<Integer> participantsList = new ArrayList<>();
+        // for (String[] participant : participants) {
+        //     participantsList.add(Integer.parseInt(participant[0]));
+        // }
 
-        for (ClientHandler client : ClientHandler.clientHanders) {
-            if (participantsList.contains(client.getUserID()) && client != clientHandler) {
-                sendMessage(clientHandler, groupName, client, message, messageID);
-            }
-        }
+        // for (ClientHandler client : ClientHandler.clientHanders) {
+        //     if (participantsList.contains(client.getUserID()) && client != clientHandler) {
+        //         sendMessage(clientHandler, groupName, client, message, messageID);
+        //     }
+        // }
         
         Data data = new Data(groupName, "message sent");
         return new Response("OK", data.getData());
@@ -69,12 +72,12 @@ public class SendMessage extends Command{
         return group;
     }
 
-    private void sendMessage(ClientHandler sender, String groupName, ClientHandler participant, String message, int messageID) {
-        Data data = new Data(groupName, message);
-        data.addToData("sender", sender.getUsername());
-        data.addToData("message_id", String.valueOf(messageID));
-        Response response = new Response("OK", data.getData());
-        String responseJson = JsonHandler.serializeResponse(response);
-        participant.sendToClient(responseJson);
-    }
+    // private void sendMessage(ClientHandler sender, String groupName, ClientHandler participant, String message, int messageID) {
+    //     Data data = new Data(groupName, message);
+    //     data.addToData("sender", sender.getUsername());
+    //     data.addToData("message_id", String.valueOf(messageID));
+    //     Response response = new Response("OK", data.getData());
+    //     String responseJson = JsonHandler.serializeResponse(response);
+    //     participant.sendToClient(responseJson);
+    // }
 }
