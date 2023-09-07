@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import chatapp.APIServer;
 import chatapp.communication.json.JsonHandler;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +31,7 @@ public class SendMessagesTest {
     }
 
     @Test
-    void getMessagesFromTestGroup(){
+    void sendMessageToTestGroup(){
         String reqString = "{" +
             "\"username\":\"admin\"," +
             "\"groupname\":\"TestGroup\"," +
@@ -42,15 +43,14 @@ public class SendMessagesTest {
 
         com.fasterxml.jackson.databind.JsonNode resBody = JsonHandler.deserializeJsonString(response.getBody().toString());
         System.out.println("response: " + resBody);
-        // assertNotNull(resBody.get("result").asText());
-        // assertEquals("OK", resBody.get("result").asText());
-        // assertNotNull(resBody.get("data"));
+        assertNotNull(resBody.get("result").asText());
+        assertEquals("OK", resBody.get("result").asText());
+        assertNotNull(resBody.get("data"));
 
-        // com.fasterxml.jackson.databind.JsonNode data = resBody.get("data");
-        // assertNotNull(data.get("groupname").asText());
-        // assertEquals("TestGroup", data.get("groupname").asText());
-        // assertNotNull(data.get("messages"));
-        // assertNotNull(data.get("message"));
-        // assertEquals("retrieved messages from TestGroup", data.get("message").asText());
+        com.fasterxml.jackson.databind.JsonNode data = resBody.get("data");
+        assertNotNull(data.get("groupname").asText());
+        assertEquals("TestGroup", data.get("groupname").asText());
+        assertNotNull(data.get("message"));
+        assertEquals("message sent", data.get("message").asText());
     }
 }

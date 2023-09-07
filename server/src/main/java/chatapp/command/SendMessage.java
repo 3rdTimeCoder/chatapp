@@ -2,6 +2,7 @@ package chatapp.command;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -33,15 +34,20 @@ public class SendMessage extends Command{
 
         // Query the database for all members of the group using the 'group_id'
         String[] group = findGroup(groupName);
+
+        if (group.length == 0) 
+            return new BasicResponse("ERROR", "Couldn't find group to send to.");
+
         int messageID = 0;
         if (group.length != 0) {
             try {
                 String[] user = DBHelper.fetchUser(username);
-                System.out.println("user: " + user);
+                System.out.println("user: " + Arrays.toString(user));
                 messageID = DBHelper.createMessage(user[1], groupName, message);
                 // participants = DBHelper.fetchAddressBook(Integer.parseInt(group[0]), false);
             } 
             catch (SQLException e) {
+                System.out.println(e.getMessage());
                 return new BasicResponse("ERROR", "An error occurred while sending message.");
             }
         }
@@ -65,10 +71,8 @@ public class SendMessage extends Command{
         String[] group = {};
         try {
             group = DBHelper.fetchGroup(groupName);
-            System.out.println("group: " + group);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+            System.out.println("group: " + Arrays.toString(group));
+        } catch (SQLException ignored) {}
         return group;
     }
 
