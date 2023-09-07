@@ -42,7 +42,6 @@ public class SendMessagesTest {
         assertEquals(200, response.getStatus()); 
 
         com.fasterxml.jackson.databind.JsonNode resBody = JsonHandler.deserializeJsonString(response.getBody().toString());
-        System.out.println("response: " + resBody);
         assertNotNull(resBody.get("result").asText());
         assertEquals("OK", resBody.get("result").asText());
         assertNotNull(resBody.get("data"));

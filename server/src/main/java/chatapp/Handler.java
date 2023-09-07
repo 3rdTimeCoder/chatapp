@@ -58,7 +58,6 @@ public class Handler {
 
     public static void sendMessage(Context context) {
         String reqBody = createReqBody("send_message", context);
-        System.out.println("request: " + reqBody);
         String response = ClientHandler.handleClientRequest(reqBody);
         context.json(response);
     }
