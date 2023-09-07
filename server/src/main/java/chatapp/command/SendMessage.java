@@ -29,7 +29,7 @@ public class SendMessage extends Command{
         String[] group = findGroup(groupName);
 
         if (group.length == 0) 
-            return new BasicResponse("ERROR", "Couldn't find group to send to.");
+            return new BasicResponse("ERROR", "The group you are trying to send to does not exist.");
 
         int messageID = 0;
         if (group.length != 0) {
