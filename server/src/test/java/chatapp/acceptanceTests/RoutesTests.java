@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import chatapp.APIServer;
 import chatapp.communication.json.JsonHandler;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
@@ -51,6 +50,5 @@ public class RoutesTests {
 
         com.fasterxml.jackson.databind.JsonNode respBody = JsonHandler.deserializeJsonString(response.getBody().toString());
         assertEquals("OK", respBody.get("result").asText()); 
-        // assertNotEquals(0, respBody.get("data").get("groups")); 
     }
 }

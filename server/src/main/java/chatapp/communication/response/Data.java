@@ -4,18 +4,28 @@ import java.util.HashMap;
 
 public class Data {
     private String groupName;
-    private String message;
+    private String username;
+    private String message = "";
     private HashMap<String, Object> data;
+    private boolean group;
     
     public Data(String groupName, String message) {
         this.groupName = groupName;
         this.message = message;
         this.data = new HashMap<>();
+        this.group = true;
+    }
+
+    public Data(String username) {
+        this.username = username;
+        this.data = new HashMap<>();
+        this.group = false;
     }
 
     public HashMap<String, Object> getData() {
-        data.put("groupname", groupName);
-        data.put("message", message);
+        String m = !message.isBlank()? message : "user fetched successfully.";
+        if (group) data.put("groupname", groupName);
+        data.put("message", m);
         return data;
     }
 
@@ -25,8 +35,9 @@ public class Data {
 
     @Override
     public String toString() {
+        String key1 = group? "groupname" : "username";
         return "{\n" +
-                "\tgroup_name: '" + groupName + '\'' + ",\n" +
+                "\t"+ key1 + " '" + groupName + '\'' + ",\n" +
                 "\tmessage: '" + message + '\'' + ",\n" +
                 "\tmessages: '" + data + '\'' + ",\n" +
                 "}";

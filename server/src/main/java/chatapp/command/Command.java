@@ -9,25 +9,14 @@ import chatapp.communication.response.Response;
 
 public abstract class Command {
     private final String name;
-    // private static JsonNode arguments;
 
     public Command(String name){
         this.name = name.trim().toLowerCase();
-        // arguments = null;
     }
-
-    // public Command(String name, JsonNode args) {
-    //     this(name);
-    //     // arguments = args;
-    // }
 
     public String getName() {                                                                      
         return name;
     }
-
-    // public JsonNode getArgs() {
-    //     return arguments;
-    // }
 
     /**
      * Creates a Command object based on the provided request string.
@@ -63,6 +52,8 @@ public abstract class Command {
                 return new DeleteMessage(args);
             case "edit_message":
                 return new EditMessage(args);
+            case "get_user":
+                return new GetUser(args);
             default:
                 throw new IllegalArgumentException("Uknown request: " + command);
         }
