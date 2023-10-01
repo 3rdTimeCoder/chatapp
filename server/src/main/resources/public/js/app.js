@@ -1,3 +1,57 @@
+// import {register} from './helpers';
+
+const base_url = 'http://localhost:5050/v1/';
+
+
+const register = () => {
+  const form = document.getElementById("form");
+  form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(event.target);
+      const body = {
+          username: data.get("username"),
+          email: data.get("email"),
+          password: data.get("password")
+      }
+
+      const options = {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body), 
+        };
+
+      document.getElementById('form-message').innerHTML = `<p>Processing...</em>...</p>`;
+
+      fetch(`http://localhost:5000/v1/register`, options)
+          .then(response => response.json())
+          .then(data => {
+              console.log(data);
+              if (data.result == "OK") {
+                // registration successful
+                console.log("registration successful");
+              }else {
+                console.log("registration failed");
+              }
+              // if (searchType == "dictionary") {
+              //     data = dictionaryData(data);
+              // }
+              // else if (searchType == "antonymns") {
+              //     data = antonymnsData(data);
+              // }else {
+              //     data = synonymsData(data);
+              //     console.log("data:", data);
+              // }
+              // const template = document.getElementById('results-template').innerText;
+              // const compiledFunction = Handlebars.compile(template);
+              // document.getElementById('results').innerHTML = compiledFunction(data);
+          }).catch(e => console.log(e));
+  });;
+}
+
+
 function lookupWord(searchType) {
   const form = document.getElementById("form");
   form.addEventListener("submit", (event) => {
@@ -11,6 +65,7 @@ function lookupWord(searchType) {
       };
 
       document.getElementById('results').innerHTML = `<p>Searching for <em>'${word}'</em>...</p>`;
+      
 
       fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`, options)
           .then(response => response.json())
@@ -62,57 +117,66 @@ const synonymsData = (resData) => {
 
 // tag::router[]
 window.addEventListener('load', () => {
-const app = $('#app');
+  const app = $('#app');
 
-const defaultTemplate = Handlebars.compile($('#default-template').html());
-const dictionaryTemplate = Handlebars.compile($('#dictionary-template').html());
-const antonymnsTemplate = Handlebars.compile($('#antonymns-template').html());
-const synonymsTemplate = Handlebars.compile($('#synonyms-template').html());
-const thesaurusTemplate = Handlebars.compile($('#thesaurus-template').html());
+  const defaultTemplate = Handlebars.compile($('#default-template').html());
+  const dictionaryTemplate = Handlebars.compile($('#dictionary-template').html());
+  const registerTemplate = Handlebars.compile($('#register-template').html());
+  const loginTemplate = Handlebars.compile($('#login-template').html());
+  const antonymnsTemplate = Handlebars.compile($('#antonymns-template').html());
+  const synonymsTemplate = Handlebars.compile($('#synonyms-template').html());
+  const thesaurusTemplate = Handlebars.compile($('#thesaurus-template').html());
 
-const router = new Router({
-  mode:'hash',
-  root:'index.html',
-  page404: (path) => {
-    const html = defaultTemplate();
+  const router = new Router({
+    mode:'hash',
+    root:'index.html',
+    page404: (path) => {
+      const html = defaultTemplate();
+      app.html(html);
+    }
+  });
+
+  router.add('/dictionary', async () => {
+    const html = dictionaryTemplate();
     app.html(html);
-  }
-});
+    lookupWord("dictionary");
+  });
 
-router.add('/dictionary', async () => {
-  html = dictionaryTemplate();
-  app.html(html);
-  lookupWord("dictionary");
-});
-
-router.add('/antonymns', async () => {
-  html = antonymnsTemplate();
-  app.html(html);
-  lookupWord("antonymns");
-});
-
-router.add('/synonyms', async () => {
-  html = synonymsTemplate();
-  app.html(html);
-  lookupWord("synonyms");
-});
+  router.add('/register', async () => {
+    const html = registerTemplate();
+    app.html(html);
+    register();
+  });
 
 
-router.add('/thesaurus', async () => {
-  html = thesaurusTemplate();
-  app.html(html);
-});
+  router.add('/antonymns', async () => {
+    const html = antonymnsTemplate();
+    app.html(html);
+    lookupWord("antonymns");
+  });
 
-router.addUriListener();
+  router.add('/synonyms', async () => {
+    const html = synonymsTemplate();
+    app.html(html);
+    lookupWord("synonyms");
+  });
 
-$('a').on('click', (event) => {
-  event.preventDefault();
-  const target = $(event.target);
-  const href = target.attr('href');
-  const path = href.substring(href.lastIndexOf('/'));
-  router.navigateTo(path);
-});
 
-router.navigateTo('/');
+  router.add('/thesaurus', async () => {
+    const html = thesaurusTemplate();
+    app.html(html);
+  });
+
+  router.addUriListener();
+
+  $('a').on('click', (event) => {
+    event.preventDefault();
+    const target = $(event.target);
+    const href = target.attr('href');
+    const path = href.substring(href.lastIndexOf('/'));
+    router.navigateTo(path);
+  });
+
+  router.navigateTo('/');
 });
 // end::router[]

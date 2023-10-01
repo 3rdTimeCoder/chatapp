@@ -61,3 +61,67 @@ body {
 .home-container .link-btn:hover {
     color: #cb6571;
 }
+
+.form-container {
+    display: grid;
+    place-content: center;
+    padding: 2rem;
+}
+
+
+/* Register */
+
+/* #form {
+    background-color: antiquewhite;
+    width: 700px;
+    min-height: 60vh;
+} */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-control input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style form message */
+.form-message {
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+}
+
+/* Style form validation errors if needed */
+.error-message {
+    color: red;
+    font-size: 14px;
+}
