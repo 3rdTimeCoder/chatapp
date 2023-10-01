@@ -53,9 +53,15 @@ public class Handler {
         args.put("groupname", groupname);
         String reqBody = createReqBody("get_messages", args);
         String response = ClientHandler.handleClientRequest(reqBody);
-        System.out.println();
-        // System.out.println("2: " + response);
-        // System.out.println();
+        context.json(response);
+    }
+
+    public static void getMessage(Context context) {
+        JSONObject args = new JSONObject();
+        String groupname = context.pathParamAsClass("groupname", String.class).get();
+        args.put("groupname", groupname);
+        String reqBody = createReqBody("get_messages", args);
+        String response = ClientHandler.handleClientRequest(reqBody);
         context.json(response);
     }
 

@@ -15,7 +15,8 @@ public class APIServer {
         this.server.post(urlPrefix + "/register", context -> Handler.register(context)); 
         this.server.get(urlPrefix + "/groups", context -> Handler.getAllGroups(context)); 
         this.server.get(urlPrefix + "/groups/getMessages/{groupname}", context -> Handler.getMessages(context)); 
-        this.server.post(urlPrefix + "/groups/sendMessage/{groupname}", context -> Handler.getAllGroups(context)); 
+        this.server.post(urlPrefix + "/groups/sendMessage/{groupname}", context -> Handler.getAllGroups(context));
+        this.server.get(urlPrefix + "/groups/getMessage/{messageId}", context -> Handler.getMessage(context));
     }
 
     public void start(int port) {
