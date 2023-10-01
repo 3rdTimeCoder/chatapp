@@ -1,0 +1,63 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+@import url('http://fonts.cdnfonts.com/css/calculator');
+
+body,html{
+  background-color: #24233c;
+  background-image: linear-gradient(43deg, #24233c 0%, #936d80 33%, #cb6571 100%);
+}
+                
+body {
+  height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+.container {
+  display: grid;
+  place-items: center;
+}
+
+.home-container {
+    color: #24233c;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+
+.home-container .heading {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+}
+
+.home-container .home-btns {
+    display: flex;
+    justify-content: center;
+}
+
+.home-container .link-btn{
+    text-decoration: none;
+    color: #cb6571;
+    color: #ece6e6f1;
+    background-color: #24233c;
+    font-size: 2rem;
+    margin: 0 0.3rem;
+    padding: 6px 2rem;
+    width: 250px;
+    text-align: center;
+    box-shadow: 9px 10px 71px 0px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 9px 10px 71px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 9px 10px 71px 0px rgba(0,0,0,0.35);
+    border-radius: 10px;
+    border-bottom: 1px solid #ece6e6f1;
+}
+
+.home-container .link-btn:hover {
+    color: #cb6571;
+}

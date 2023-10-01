@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DevZone</title>
+    <link
+        href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAOjv4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEBEAAAAAEBAAABAQAAAQEREREBAAABEREREREAAAARAREBEAAAAAEREREAAAAAABAAEAAAAAAAEAAQAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA//8AAPyfAADr6wAA6AsAAOADAADyJwAA+A8AAP3fAAD93wAA++8AAP//AAD//wAA"
+        rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- <nav>
+        <a href="#/dictionary" id="dictionary">Dictionary</a>
+        <a href="#/antonymns" id="antonyms">Antonymns</a>
+        <a href="#/synonyms" id="synonyms">Synonyms</a>
+        <a href="#/thesaurus" id="">Thesaurus</a>
+    </nav> -->
+
+    <div id="app">
+        <div class="home-container">
+            <div class="text">
+                <h1 class="heading">< DevZone /></h1>
+                <div class="home-btns">
+                    <a href="#/register" id="register" class="link-btn">Register</a>
+                    <a href="#/login" id="login" class="link-btn">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script id="home-template" type="text/handlebars-template">
+    </script>
+
+    <script id="default-template" type="text/handlebars-template">
+    </script>
+
+    <script id="dictionary-template" type="text/handlebars-template">
+        <h1>Dictionary</h1>
+        <br/>
+        <form id="form">
+        <input name="word" type="text" id="lookup" required/>
+        <input name="submit" type="submit" value="Lookup"/>
+        </form>
+        <br/>
+        <div id="results"></div>
+    </script>
+
+    <script id="antonymns-template" type="text/handlebars-template">
+        <h1>Antonymns</h1>
+        <br/>
+        <form id="form">
+        <input name="word" type="text" id="lookup" required/>
+        <input name="submit" type="submit" value="Lookup"/>
+        </form>
+        <br/>
+        <div id="results"></div>
+    </script>
+
+    <script id="synonyms-template" type="text/handlebars-template">
+        <h1>Synonyms</h1>
+        <br/>
+        <form id="form">
+        <input name="word" type="text" id="lookup" required/>
+        <input name="submit" type="submit" value="Lookup"/>
+        </form>
+        <br/>
+        <div id="results"></div>
+    </script>
+
+    <script id="thesaurus-template" type="text/handlebars-template">
+        <h1>Thesaurus</h1>
+        <p>Coming soon!</p>
+        <br/>
+    </script>
+
+
+    <script id="results-template" type="text/handlebars-template">
+        <h2><span id="word">{{word}}</span> &nbsp; <span id="phonetic">{{phonetic}}</span></h2>
+
+        {{#if audio}}
+            <div id="audio-container">
+                <audio controls id="audio">
+                    <source src={{audio}} type="audio/mp3">
+                </audio> 
+            </div>
+        {{/if}}
+
+        {{#if definitions}}
+            <h3>Meanings</h3>
+            {{#each partsOfSpeech}}
+                <h4 class="part-of-speech">{{partOfSpeech}}</h4>
+                <ol>
+                    {{#each definitions}}
+                        <li class="definition">
+                            {{this.definition}} 
+                            {{#if this.example}}
+                                <em class="example">Example: {{this.example}}</em>
+                            {{/if}}
+                        </li>
+
+                    {{/each}}
+                </ol>
+            {{/each}}
+        {{/if}}
+
+        {{#if antonyms}}
+            <h3>List Of Antonyms</h3>
+            <ol>
+                {{#each antonyms}}
+                    <li class="related-word">{{this}}</li>
+                {{/each}}
+            </ol>
+        {{/if}}
+
+        {{#if synonyms}}
+            <h3>List Of Synonyms</h3>
+            <ol>
+                {{#each synonyms}}
+                    <li class="related-word">{{this}}</li>
+                {{/each}}
+            </ol>
+        {{/if}}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+    <!-- the vanilla-router library-->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-router@1.2.8/index.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
