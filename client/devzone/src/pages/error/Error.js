@@ -4,7 +4,7 @@ import './error.css';
 
 const Home = () => {
   return (
-    <div>
+    <div className='container'>
       <h1>Oops! Wrong turn...</h1>
     </div>
   );

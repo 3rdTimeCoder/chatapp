@@ -1,8 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Home } from "./pages/home/Home";
-// import {}
-
+import { Landing } from "./pages/landing/Landing";
+import { Error } from "./pages/error/Error";
+ 
 function App() {
   return (
     <>

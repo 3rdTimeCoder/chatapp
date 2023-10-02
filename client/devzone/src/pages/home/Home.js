@@ -5,8 +5,7 @@ import './home.css';
 const Home = () => {
   return (
     <div>
-      <h1>Welcome to the Landing Page</h1>
-      {/* <Link to="/dictionary">Go to Dictionary</Link> */}
+      <h1>Welcome to the Home Page</h1>
     </div>
   );
 }

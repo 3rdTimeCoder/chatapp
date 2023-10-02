@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    place-content: center;
+    color: antiquewhite;
+}
+
+.container h1 {
+    font-size: 4rem;
+}
