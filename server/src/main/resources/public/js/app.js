@@ -1,9 +1,10 @@
 // import {register} from './helpers';
 
-const base_url = 'http://localhost:5050/v1/';
+const base_url = 'http://localhost:5000/v1';
 
 
-const register = () => {
+const register = (router) => {
+
   const form = document.getElementById("form");
   form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -23,32 +24,18 @@ const register = () => {
           body: JSON.stringify(body), 
         };
 
-      document.getElementById('form-message').innerHTML = `<p>Processing...</em>...</p>`;
+      const formMessage = document.getElementById('form-message');
+      formMessage.innerHTML = `<p>Processing...</em>...</p>`;
 
-      fetch(`http://localhost:5000/v1/register`, options)
+      fetch(`${base_url}/register`, options)
           .then(response => response.json())
           .then(data => {
-              console.log(data);
-              if (data.result == "OK") {
-                // registration successful
-                console.log("registration successful");
-              }else {
-                console.log("registration failed");
-              }
-              // if (searchType == "dictionary") {
-              //     data = dictionaryData(data);
-              // }
-              // else if (searchType == "antonymns") {
-              //     data = antonymnsData(data);
-              // }else {
-              //     data = synonymsData(data);
-              //     console.log("data:", data);
-              // }
-              // const template = document.getElementById('results-template').innerText;
-              // const compiledFunction = Handlebars.compile(template);
-              // document.getElementById('results').innerHTML = compiledFunction(data);
-          }).catch(e => console.log(e));
-  });;
+              console.log(data)
+              if (data.result == "OK") router.navigateTo('/dictionary') 
+              else formMessage.innerHTML = data.data.message 
+          })
+          .catch(e => formMessage.innerHTML = "An Error Occured");
+  });
 }
 
 
@@ -121,7 +108,7 @@ window.addEventListener('load', () => {
 
   const defaultTemplate = Handlebars.compile($('#default-template').html());
   const dictionaryTemplate = Handlebars.compile($('#dictionary-template').html());
-  const registerTemplate = Handlebars.compile($('#register-template').html());
+  const landingTemplate = Handlebars.compile($('#landing-template').html());
   const loginTemplate = Handlebars.compile($('#login-template').html());
   const antonymnsTemplate = Handlebars.compile($('#antonymns-template').html());
   const synonymsTemplate = Handlebars.compile($('#synonyms-template').html());
@@ -131,9 +118,10 @@ window.addEventListener('load', () => {
     mode:'hash',
     root:'index.html',
     page404: (path) => {
-      const html = defaultTemplate();
+      const html = landingTemplate();
       app.html(html);
-    }
+    },
+    defaultRoute: '/',
   });
 
   router.add('/dictionary', async () => {
@@ -142,10 +130,10 @@ window.addEventListener('load', () => {
     lookupWord("dictionary");
   });
 
-  router.add('/register', async () => {
-    const html = registerTemplate();
+  router.add('/landing', async () => {
+    const html = landingTemplate();
     app.html(html);
-    register();
+    register(router);
   });
 
 
@@ -176,7 +164,8 @@ window.addEventListener('load', () => {
     const path = href.substring(href.lastIndexOf('/'));
     router.navigateTo(path);
   });
+  
 
-  router.navigateTo('/');
+  router.navigateTo('/landing');
 });
 // end::router[]

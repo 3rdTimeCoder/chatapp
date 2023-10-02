@@ -18,43 +18,79 @@
     </nav> -->
 
     <div id="app">
+        <!-- <div class="home-container">
+            <div class="text">
+                <h1 class="heading">< DevZone /></h1>
+            </div>
+
+            <div class="form-container">
+                <form id="form">
+                    <div class="form-control">
+                        <label for="username" class="form-label">username</label>
+                        <input name="username" type="text" id="username" class="form-input" required/>
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="email" class="form-label">email</label>
+                        <input name="email" type="email" id="email" class="form-input" required/>
+                    </div>   
+        
+                    <div class="form-control">
+                        <label for="password" class="form-label">password</label>
+                        <input name="password" type="password" id="password" minlength="8" class="form-input" required/>
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="confirm-password" class="form-label">confirm password</label>
+                        <input name="confirm-password" type="password" id="confirm-password" minlength="8" class="form-input" required/>
+                    </div>
+        
+                    <div class="form-btns">
+                        <input name="register" type="submit" value="Register" class="btn"/>
+                        <input name="login" type="submit" value="Login" class="btn"/>
+                    </div>
+                </form>
+                <div id="form-message" class="form-message"></div>
+            </div>
+        </div> -->
+    </div>
+    
+    <script id="landing-template" type="text/handlebars-template">
         <div class="home-container">
             <div class="text">
                 <h1 class="heading">< DevZone /></h1>
-                <div class="home-btns">
-                    <a href="#/register" id="register" class="link-btn">Register</a>
-                    <a href="#/login" id="login" class="link-btn">Login</a>
-                </div>
             </div>
-        </div>
-    </div>
-    
-    <script id="register-template" type="text/handlebars-template">
-        <div class="form-container">
-            <form id="form">
-                <div class="form-contol">
-                    <input name="username" type="text" id="username" placeholder="username" required/>
-                    <label for="username" class="form-label">username</label>
-                </div>
-    
-                <div class="form-contol">
-                    <label for="email" class="form-label">email</label>
-                    <input name="email" type="email" id="email" placeholder="email" required/>
-                </div>   
-    
-                <div class="form-contol">
-                    <label for="password" class="form-label">password</label>
-                    <input name="password" type="password" id="password" placeholder="password" minlength="8" required/>
-                </div>
-    
-                <div class="form-contol">
-                    <label for="confirm-password" class="form-label">confirm password</label>
-                    <input name="confirm-password" type="password" id="confirm-password" placeholder="confirm-password" minlength="8" required/>
-                </div>
-    
-                <input name="submit" type="submit" value="Register" class="btn"/>
-            </form>
-            <div id="form-message" class="form-message"></div>
+
+            <div class="form-container">
+                <form id="form">
+                    <div class="form-control">
+                        <label for="username" class="form-label">username</label>
+                        <input name="username" type="text" id="username" class="form-input" required/>
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="email" class="form-label">email</label>
+                        <input name="email" type="email" id="email" class="form-input" required/>
+                    </div>   
+        
+                    <div class="form-control">
+                        <label for="password" class="form-label">password</label>
+                        <input name="password" type="password" id="password" minlength="8" class="form-input" required/>
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="confirm-password" class="form-label">confirm password</label>
+                        <input name="confirm-password" type="password" id="confirm-password" minlength="8" class="form-input" required/>
+                    </div>
+
+                    <div id="form-message" class="form-message"></div>
+        
+                    <div class="form-btns">
+                        <input name="register" type="submit" value="Register" class="btn"/>
+                        <input name="login" type="submit" value="Login" class="btn"/>
+                    </div>
+                </form>
+            </div>
         </div>
     </script>
 
