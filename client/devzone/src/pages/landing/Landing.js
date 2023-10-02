@@ -19,11 +19,6 @@ function LandingPage() {
         const form = document.getElementById('form');
         const elements = form.elements;
 
-        console.log("form:", form);
-        console.log("elements:", elements);
-        console.log("username:", elements.username.value);
-
-        // Extract the values from form elements and update the state
         const newFormData = {
             username: elements.username.value,
             email: elements.email.value,
@@ -32,18 +27,6 @@ function LandingPage() {
         };
 
         setFormData(newFormData);
-
-        // Now you can access formData in your component state
-        console.log(formData);
-
-        // const data = new FormData(e.target);
-        // const body = {
-        //     username: data.get("username"),
-        //     email: data.get("email"),
-        //     password: data.get("password")
-        // };
-
-        // console.log("body:", body);
 
         const options = {
             method: 'POST', 
@@ -66,7 +49,6 @@ function LandingPage() {
           .catch(e => formMessage.innerHTML = "An Error Occured");
 
     }
-
 
     return (
         <>
