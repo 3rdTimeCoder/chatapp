@@ -59,29 +59,29 @@ function LandingPage() {
                 <div className="form-container">
                     <form id="form">
                         <div className="form-control">
-                            <label for="username" className="form-label">username</label>
+                            <label htmlFor="username" className="form-label">username</label>
                             <input name="username" type="text" id="username" className="form-input" required
                                 value={formData.username} 
                                 onChange={(e) => setFormData({...formData, username: e.target.value})} />
                         </div>
             
                         <div className="form-control">
-                            <label for="email" className="form-label">email</label>
+                            <label htmlFor="email" className="form-label">email</label>
                             <input name="email" type="email" id="email" className="form-input" required
                                 value={formData.email} 
                                 onChange={(e) => setFormData({...formData, email: e.target.value})}/>
                             </div>   
             
                         <div className="form-control">
-                            <label for="password" className="form-label">password</label>
-                            <input name="password" type="password" id="password" minlength="8" className="form-input" required
+                            <label htmlFor="password" className="form-label">password</label>
+                            <input name="password" type="password" id="password" minLength="8" className="form-input" required
                                 value={formData.password} 
                                 onChange={(e) => setFormData({...formData, password: e.target.value})}/>
                             </div>
             
                         <div className="form-control">
-                            <label for="confirm-password" className="form-label">confirm password</label>
-                            <input name="confirm-password" type="password" id="confirm-password" minlength="8" className="form-input" required
+                            <label htmlFor="confirm-password" className="form-label">confirm password</label>
+                            <input name="confirm-password" type="password" id="confirm-password" minLength="8" className="form-input" required
                                 value={formData.confirmPassword} 
                                 onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}/>
                             </div>
