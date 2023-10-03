@@ -25,22 +25,24 @@ function LandingPage() {
           };
     }
 
-    const register = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
+        const action = e.target.value.toLowerCase();
         const options = getOptions();
         const formMessage = document.getElementById('form-message');
         formMessage.innerHTML = `<p>Processing...</em>...</p>`;
 
-        if (formData.password !== formData.confirmPassword) {
+        if (formData.password !== formData.confirmPassword && action === "register") {
             formMessage.innerHTML = `<p><em>Passwords do not match</em>...</p>`;
         }
         else {
-            fetch(`${config.base_api_url}/register`, options)
+            fetch(`${config.base_api_url}/${action}`, options)
               .then(response => response.json())
               .then(data => {
-                  console.log(data);
-                  if (data.result === "OK") navigateTo('/home');
+                  if (data.result === "OK" && action === "register") 
+                    formMessage.innerHTML = `<p><em>Registration Successful! Login</em>...</p>`;
+                  else if (data.result === "OK" && action === "login") navigateTo('/home');
                   else formMessage.innerHTML = data.data.message;
               })
               .catch(e => formMessage.innerHTML = "An Error Occured");
@@ -87,8 +89,8 @@ function LandingPage() {
                         <div id="form-message" className="form-message"></div>
             
                         <div className="form-btns">
-                            <input name="register" type="submit" value="Register" className="btn" onClick={register}/>
-                            <input name="login" type="submit" value="Login" class="btn"/>
+                            <input name="register" type="submit" value="Register" className="btn" onClick={handleSubmit}/>
+                            <input name="login" type="submit" value="Login" className="btn" onClick={handleSubmit}/>
                         </div>
                     </form>
                 </div>
