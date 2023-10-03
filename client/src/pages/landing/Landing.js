@@ -32,8 +32,6 @@ function LandingPage() {
         const formMessage = document.getElementById('form-message');
         formMessage.innerHTML = `<p>Processing...</em>...</p>`;
 
-        console.log(`email: ${formData.email}\npassword: ${formData.password}\nconfirm: ${formData.confirmPassword}`);
-
         if (formData.password !== formData.confirmPassword) {
             formMessage.innerHTML = `<p><em>Passwords do not match</em>...</p>`;
         }
