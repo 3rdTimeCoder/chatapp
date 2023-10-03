@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './landing.css';
 import config from '../../config/Config';
@@ -32,6 +31,8 @@ function LandingPage() {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
+              'mode': 'cors',
+               
             },
             body: JSON.stringify(formData), 
           };

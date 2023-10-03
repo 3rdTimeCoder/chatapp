@@ -12,6 +12,7 @@ public class APIServer {
         server = Javalin.create(config -> {
             config.defaultContentType = "application/json"; 
             config.addStaticFiles(PAGES_DIR, Location.CLASSPATH);
+            config.enableCorsForAllOrigins();
         });
 
         this.server.post(urlPrefix + "/login", context -> Handler.login(context)); 
