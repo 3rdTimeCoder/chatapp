@@ -9,6 +9,7 @@
 body,html{
   background-color: #24233c;
   background-image: linear-gradient(43deg, #24233c 0%, #936d80 33%, #cb6571 100%);
+  transition: all 0.3s ease-in-out; 
 }
 
 body {
@@ -19,7 +20,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+ 
+li {
+  list-style: none;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
