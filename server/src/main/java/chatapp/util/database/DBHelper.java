@@ -255,11 +255,14 @@ public class DBHelper {
      * @return A list of string arrays representing the user IDs or group IDs based on the specified condition.
      * @throws SQLException if a database access error occurs
      */
-    public static List<String[]> fetchAddressBook(String name, boolean userGroups) throws SQLException {
+    public static List<String> fetchAddressBook(String name, boolean userGroups) throws SQLException {
         String query = userGroups ?
                 "SELECT DISTINCT group_name FROM address_book WHERE username = ?" :
                 "SELECT DISTINCT username FROM address_book WHERE group_name = ?";
-        return executeSelectQuery(query, name);
+        List<String[]> result = executeSelectQuery(query, name);
+        List<String> structedResult = new ArrayList<>();
+        for (String[] res : result) structedResult.add(res[0]);
+        return structedResult;
     }
 
     /**
@@ -359,8 +362,8 @@ public class DBHelper {
             // printArray(fetchUser(1));
             // createUser("admin", "whatever@email.com", "testing");
             // deleteUser("JohnWick7");
-            // displayQueryResult(fetchAddressBook("admin", true));
-            displayQueryResult(fetchAddressBook("testUser", true));
+            System.out.println(fetchAddressBook("admin", true));
+            System.out.println(fetchAddressBook("testUser", true));
             // System.out.println(fetchMessageId(1, "TestGroup", "Hello, World!"));
         } catch (SQLException e) {
             e.printStackTrace();

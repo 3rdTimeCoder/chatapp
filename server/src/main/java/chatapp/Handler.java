@@ -47,6 +47,19 @@ public class Handler {
         }
     }
 
+    public static void getUserGroups(Context context) {
+        try {
+            String username = context.pathParamAsClass("username", String.class).get();
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("groups", DBHelper.fetchAddressBook(username, true));
+            context.json(new Response("OK", data));
+        } 
+        catch (SQLException e) { 
+            context.status(HttpCode.NOT_FOUND);
+            context.json(new BasicResponse("ERROR", "An error occurred while fetching groups.")); 
+        }
+    }
+
     public static void getMessages(Context context) {
         JSONObject args = new JSONObject();
         String groupname = context.pathParamAsClass("groupname", String.class).get();
