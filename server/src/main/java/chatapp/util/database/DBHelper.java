@@ -248,18 +248,18 @@ public class DBHelper {
 
     /**
      * Fetches all groups a user is a participant in (userGroups = true)
-     * or all the participants in a single group (userGroups = false).
+     * or all the participants in a group (userGroups = false).
      *
-     * @param id The ID of the user or group.
+     * @param name The name of the user or group.
      * @param userGroups  If true, fetches all groups the user is a participant in. If false, fetches all participants of the group.
      * @return A list of string arrays representing the user IDs or group IDs based on the specified condition.
      * @throws SQLException if a database access error occurs
      */
-    public static List<String[]> fetchAddressBook(int id, boolean userGroups) throws SQLException {
+    public static List<String[]> fetchAddressBook(String name, boolean userGroups) throws SQLException {
         String query = userGroups ?
-                "SELECT DISTINCT group_id FROM address_book WHERE user_id = ?" :
-                "SELECT DISTINCT user_id FROM address_book WHERE group_id = ?";
-        return executeSelectQuery(query, id);
+                "SELECT DISTINCT group_name FROM address_book WHERE username = ?" :
+                "SELECT DISTINCT username FROM address_book WHERE group_name = ?";
+        return executeSelectQuery(query, name);
     }
 
     /**
@@ -358,7 +358,9 @@ public class DBHelper {
             // displayQueryResult(fetchAddressBook(1, false));
             // printArray(fetchUser(1));
             // createUser("admin", "whatever@email.com", "testing");
-            deleteUser("JohnWick7");
+            // deleteUser("JohnWick7");
+            // displayQueryResult(fetchAddressBook("admin", true));
+            displayQueryResult(fetchAddressBook("testUser", true));
             // System.out.println(fetchMessageId(1, "TestGroup", "Hello, World!"));
         } catch (SQLException e) {
             e.printStackTrace();
