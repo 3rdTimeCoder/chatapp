@@ -1,160 +1,123 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './home.css';
+import config from '../../config/Config';
+
+const getOptions = () => {
+  return {
+    method: 'GET', 
+    headers: {
+      'Content-Type': 'application/json',
+      'mode': 'cors',
+       
+    },
+  };
+}
+
 
 const Home = () => {
-  return <>
-    <nav>
-      <h2>DevZone</h2>
-      <input type='text' placeholder='search...' className='search-bar'/>
-      <button type='button' className='logout-btn'>logout</button>
-    </nav>
-    <div className='home-container'>
-      <section className='rooms'>
-        <ul>
-          <li className='room active'>
-            <h4 className='room-name'>The 13th Floor</h4>
-            <p className='last-sent'> 
-              <span className='last-sender'>~admin213: </span> 
-              <span className='last-sent-message'>I see this will be a very productive room...</span> 
-            </p>
-          </li>
-          <li className='room active'>
-            <h4 className='room-name'>Juniorz</h4>
-            <p className='last-sent'> 
-              <span className='last-sender'>~johnnybarvo: </span> 
-              <span className='last-sent-message'>senior work, junior salary lol</span> 
-            </p>
-          </li>
-          <li className='room active'>
-            <h4 className='room-name'>Doomsday Debuggers</h4>
-            <p className='last-sent'> 
-              <span className='last-sender'>~janedoe: </span> 
-              <span className='last-sent-message'>This isn't even a bug anymore it's a straight up rat</span> 
-            </p>
-          </li>
-          <li className='room active'>
-            <h4 className='room-name'>Analitica</h4>
-            <p className='last-sent'> 
-              <span className='last-sender'>~james: </span> 
-              <span className='last-sent-message'>I just be drawing charts man...</span> 
-            </p>
-          </li>
-          <li className='room active'>
-            <h4 className='room-name'>Code Confessions</h4>
-            <p className='last-sent'> 
-              <span className='last-sender'>~yoli: </span> 
-              <span className='last-sent-message'>I dont really like java, I just like the idea of being someone who likes java</span> 
-            </p>
-          </li>
-        </ul>
-      </section>
+    const [user, setUser] = useState({
+      username: localStorage.getItem('username'),
+      email: localStorage.getItem('email')
+    });
+    const [groups, setGroups] = useState([]);
+    const [currentGroup, setCurrentGroup] = useState('');
+    const [currentGroupMessages, setCurrentGroupMessages] = useState([]);
+    const [textToSend, setTextToSend] = useState('');
 
-      <section className='main'>
-        <div className='info'>
-          <h3>The 13th Floor</h3>
-          <p><span className='number'>234</span> members</p>
-        </div>
-        <div className='messages'>
-          <article className="message user">
-            <div className='message-header'>
-              <h4>JonnyBravo</h4>
-              <p>4 hours ago</p>
-            </div>
-            <p className='message-body'>HEya!!! Welcome to The 13th Floor, Here are some basic house rulezz...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>JaneDoe</h4>
-              <p>4 hours ago</p>
-            </div>
-            <p className='message-body'>Hello loserz, let's do this!!!!!!</p>
-          </article>
-          <article className='message user'>
-            <div className='message-header'>
-              <h4>JonnyBravo</h4>
-              <p>4 few hours ago</p>
-            </div>
-            <p className='message-body'>Dude!!! Did I not just say we need to be respectfull in the house rulez?!?!!!</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>JaneDoe</h4>
-              <p>3 hours ago</p>
-            </div>
-            <p className='message-body'>Chillout grandma</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
+    useEffect(()=>{
+      fetch(`${config.base_api_url}/groups/${user.username}`, getOptions())
+              .then(response => response.json())
+              .then(data => {
+                  setGroups(data.data.groups);
+                  setCurrentGroup(data.data.groups[0]);
+              })
+              .catch(e => console.log(e));
+    }, []);
 
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-          <article className="message">
-            <div className='message-header'>
-              <h4>admin213</h4>
-              <p>2 hours ago</p>
-            </div>
-            <p className='message-body'>I see this will be a very productive room...</p>
-          </article>
-        </div>
+    useEffect(()=>{
+      fetch(`${config.base_api_url}/groups/getMessages/${currentGroup}`, getOptions())
+              .then(response => response.json())
+              .then(data => {
+                  if (data.result === 'OK') {
+                    const messages = JSON.parse(data.data.messages);
+                    setCurrentGroupMessages(messages);
+                  }
+              })
+              .catch(e => console.log(e));
+    }, [currentGroup]);
+
+    const sendMessage = (e) => {
+      e.preventDefault();
+
+      const formData = {
+        username: user.username,
+        groupname: currentGroup,
+        message: textToSend
+      }
+      const options = {...getOptions(), method: 'POST', body: JSON.stringify(formData)};
+
+      fetch(`${config.base_api_url}/groups/sendMessage/${currentGroup}`, options)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.result === 'OK') {
+                    setTextToSend('');
+                  }
+              })
+              .catch(e => console.log(e));
+    }
 
 
-        <div className='text-box-wrapper'>
-          <div className='text-box'>
-            <form>
-              <textarea className='input-box box-shadow' placeholder='type your message...'></textarea>
-              <input type='submit' value='&gt;' className='send-btn' />
-            </form>
+    return <>
+      <nav>
+        <h2>DevZone</h2>
+        <input type='text' placeholder='search...' className='search-bar'/>
+        <button type='button' className='logout-btn'>logout</button>
+      </nav>
+      <div className='home-container'>
+        <section className='rooms'>
+          <ul>
+          {groups.map((group, index) => (
+            <li className='room' key={index} onClick={() => setCurrentGroup(group)}>
+              <h4 className='room-name'>{group}</h4>
+              <p className='last-sent'>
+                <span className='last-sender'>~admin213: </span>
+                <span className='last-sent-message'>I see this will be a very productive room...</span>
+              </p>
+            </li>
+          ))}
+          </ul>
+        </section>
+
+        <section className='main'>
+          <div className='info'>
+            <h3>{currentGroup}</h3>
+            <p><span className='number'>234</span> members</p>
           </div>
-        </div>
+          <div className='messages'>
+            {currentGroupMessages.map((message, index) => (
+              <article className={message.sender_name === user.username? "message user" : "message"} key={index}>
+                <div className='message-header'>
+                  <h4>{message.sender_name}</h4>
+                  <p>{message.date_sent}</p>
+                </div>
+                <p className='message-body'>{message.message}</p>
+              </article>
+            ))}
+          </div>
 
-      </section>
-    </div>
-  </>;
+          <div className='text-box-wrapper'>
+            <div className='text-box'>
+              <form>
+                <textarea className='input-box box-shadow' placeholder='type your message...' 
+                  value={textToSend} onChange={e => setTextToSend(e.target.value)}></textarea>
+                <input type='submit' value='&gt;' className='send-btn' onClick={sendMessage} />
+              </form>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </>;
 }
 
 export default Home;

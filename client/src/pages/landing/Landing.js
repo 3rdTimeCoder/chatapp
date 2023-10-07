@@ -42,7 +42,11 @@ function LandingPage() {
               .then(data => {
                   if (data.result === "OK" && action === "register") 
                     formMessage.innerHTML = `<p><em>Registration Successful! Login</em>...</p>`;
-                  else if (data.result === "OK" && action === "login") navigateTo('/home');
+                  else if (data.result === "OK" && action === "login") {
+                    localStorage.setItem('username', formData.username);
+                    localStorage.setItem('email', formData.email);
+                    navigateTo('/home');
+                  } 
                   else formMessage.innerHTML = data.data.message;
               })
               .catch(e => formMessage.innerHTML = "An Error Occured");
