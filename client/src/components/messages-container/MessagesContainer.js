@@ -62,6 +62,10 @@ const MessagesContainer = ({currentGroup, user}) => {
               .catch(e => console.log(e));
     }
 
+    const deletMessage = (e) => {
+      console.log('Delete message:', e.target)
+    }
+
 
     return <>
         <section className='main'>
@@ -73,8 +77,13 @@ const MessagesContainer = ({currentGroup, user}) => {
             {currentGroupMessages.map((message, index) => (
               <article className={message.sender_name === user.username? "message user" : "message"} key={message.message_id}>
                 <div className='message-header'>
-                  <h4>{message.sender_name}</h4>
-                  <p>{message.date_sent}</p>
+                  <div className='left'>
+                    <h4>{message.sender_name}</h4>
+                    <p>{message.date_sent}</p>
+                  </div>
+                  <div className='right'>
+                    {message.sender_name === user.username? <p className='delete-message' onClick={deletMessage}>Delete</p> : ''}
+                  </div>
                 </div>
                 <p className='message-body'>{message.message}</p>
               </article>

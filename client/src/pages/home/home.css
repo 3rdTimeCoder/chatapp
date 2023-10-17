@@ -36,6 +36,23 @@ nav .logout-btn {
     border-radius: 10px;
 }
 
+nav .nav-icon {
+    /* background-color: transparent; */
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    /* color: antiquewhite; */
+    font-size: 14px;
+    outline: none;
+    border: 1px solid antiquewhite;
+    border-radius: 50%;
+    background-color: antiquewhite;
+    color:#24233c;
+    margin: 0 1rem;
+}
+
+
 nav .logout-btn:hover {
     background-color: antiquewhite;
     color:#24233c;
@@ -88,7 +105,7 @@ nav .logout-btn:hover {
     color: rgba(243, 219, 189, 0.863);
 }
 
-.main {
+/* .main {
     padding: 0.75rem 0;
     position: relative;
     display: flex;
@@ -158,10 +175,7 @@ nav .logout-btn:hover {
     width: 95%;
     z-index: 100;
     margin: 0 auto;
-    /* left: 50%;
-    right: 50%; */
 }
-
 
 .home-container form {
     position: relative;
@@ -200,7 +214,7 @@ nav .logout-btn:hover {
     background-color: #24233c;
     color: antiquewhite;
     cursor: pointer;
-}
+} */
 
 .rooms::-webkit-scrollbar,
 .messages::-webkit-scrollbar {

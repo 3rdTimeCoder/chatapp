@@ -1,0 +1,130 @@
+.main {
+    padding: 0.75rem 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main .info {
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+.main .info .number {
+    font-size: 11px;
+}
+.main .info h3 {
+    font-size: 20px;
+}
+
+.main .info p {
+    font-size: 12px;
+}
+.main .messages {
+    overflow-y: auto;
+    width: 96%;
+    height: 70vh;
+    padding: 8px 1.5rem;
+    padding-bottom: 10px;
+}
+.message {
+    padding: 0.5rem 1rem;
+    background-color: antiquewhite;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    color: #24233c;
+    padding-left: 20px;
+    box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+    -moz-box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+}
+
+.message.user {
+    background-color: #24233c;
+    color: antiquewhite;
+}
+
+.message-header {
+    /* width: 200px; */
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 8px;
+}
+
+.message-header .left {
+    display: flex;
+    align-items: end;
+}
+
+.message-header .left p {
+    padding-bottom: 1.6px;
+}
+
+.message-header .right p {
+    cursor: pointer;
+    padding-right: 8px;
+}
+
+.message-header .right p:hover {
+    color: rgb(241, 65, 65);
+    font-weight: bold;
+}
+
+.message-header p {
+    font-size: 11px;
+    margin-left: 12px;
+}
+
+.message-body {
+    font-size: 14px;
+    padding-bottom: 4px;
+}
+
+.text-box-wrapper {
+    position: absolute;
+    bottom: 10px;
+    width: 95%;
+    z-index: 100;
+    margin: 0 auto;
+}
+
+.home-container form {
+    position: relative;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.home-container .input-box {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: 10px 10px 50px rgba(0,0,0,0.2);
+    padding: 8px 10px;
+    outline: none;
+    border: 1px solid antiquewhite;
+    color: antiquewhite;
+    resize: none;
+    font-size: 14px;
+    z-index: inherit;
+    background-color: #24233c;
+    background-image: linear-gradient(43deg, #24233c 0%, #936d80 33%, #cb6571 100%);
+}
+
+.send-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 35%;
+    right: 10px;
+    background-color: #24233c;
+    color: antiquewhite;
+    cursor: pointer;
+}
