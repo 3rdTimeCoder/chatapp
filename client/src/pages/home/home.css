@@ -32,7 +32,6 @@ nav .logout-btn {
     color: antiquewhite;
     font-size: 14px;
     outline: none;
-    /* font-weight: bold; */
     border: 1px solid antiquewhite;
     border-radius: 10px;
 }
@@ -40,7 +39,6 @@ nav .logout-btn {
 nav .logout-btn:hover {
     background-color: antiquewhite;
     color:#24233c;
-    /* font-weight: bold;  */
 }
 
 .box-shadow {
@@ -217,7 +215,3 @@ nav .logout-btn:hover {
     background: #24233c;
     border-radius: 8px;
   }
-/* .rooms::-webkit-scrollbar-thumb:hover,
-.messages::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }  */

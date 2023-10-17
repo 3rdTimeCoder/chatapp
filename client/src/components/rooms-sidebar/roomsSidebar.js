@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
 import config from '../../config/Config';
-import MessagesContainer from '../../components/messages-container/MessagesContainer';
-import Navbar from '../../components/navbar/Navbar';
 
 
-const Home = () => {
-    const [user, setUser] = useState({
-      username: localStorage.getItem('username'),
-      email: localStorage.getItem('email')
-    });
+const Home = ({user}) => {
     const [groups, setGroups] = useState([]);
     const [currentGroup, setCurrentGroup] = useState('');
 
@@ -25,10 +19,7 @@ const Home = () => {
     }, []);
 
     return <>
-      <Navbar/>
-
-      <div className='home-container'>
-        <section className='rooms'>
+      <section className='rooms'>
           <ul>
           {groups.map((group, index) => (
             <li className='room' key={index} onClick={() => setCurrentGroup(group)}>
@@ -41,12 +32,6 @@ const Home = () => {
           ))}
           </ul>
         </section>
-
-        {groups.length !== 0? 
-          <MessagesContainer {...{currentGroup, user}}/> : 
-          <section className='main'>No messages to display...</section>
-        }
-      </div>
     </>;
 }
 

@@ -1,0 +1,42 @@
+nav {
+    width: 100vw;
+    height: 7vh;
+    border-bottom: 1px solid rgba(250, 235, 215, 0.356);
+    display: grid;
+    grid-template-columns: 35% 45% 15%;
+    place-content: center;
+}
+
+nav .search-bar {
+    width: 400px;
+    height: 30px;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 6px 10px;
+    background: antiquewhite;
+    text-align: center;
+    font-size: 14px;
+}
+
+nav h2 {
+    color: #24233c;
+    font-style: italic;
+}
+
+nav .logout-btn {
+    background-color: transparent;
+    cursor: pointer;
+    width: 150px;
+    color: antiquewhite;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid antiquewhite;
+    border-radius: 10px;
+}
+
+nav .logout-btn:hover {
+    background-color: antiquewhite;
+    color:#24233c;
+}

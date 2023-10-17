@@ -1,0 +1,39 @@
+.rooms {
+    overflow-y: scroll;
+    border-right: 1px solid rgba(250, 235, 215, 0.356);
+}
+
+.rooms .room {
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.rooms .room:hover {
+    transform: scale(1.05);
+}
+
+.room .room-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.room .last-sent {
+    font-size: 11px;
+    color: rgba(243, 219, 189, 0.863);
+}
+
+.rooms::-webkit-scrollbar,
+.messages::-webkit-scrollbar {
+    width: 8px;
+  }
+.rooms::-webkit-scrollbar-track,
+.messages::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+.rooms::-webkit-scrollbar-thumb,
+.messages::-webkit-scrollbar-thumb {
+    background: #24233c;
+    border-radius: 8px;
+  }
