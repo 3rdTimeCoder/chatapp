@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './messagesContainer.css';
+import './addGroup.css';
 import config from '../../config/Config';
 
 
-const AddGroups = ({currentGroup, user}) => {
+const AddGroups = ({user}) => {
     const navigateTo = useNavigate();
-    const [errorOccurred, setErrorOccurred] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
       username: user.username,
       groupname: '',
@@ -21,26 +21,25 @@ const AddGroups = ({currentGroup, user}) => {
               .then(response => response.json())
               .then(data => {
                 console.log(data);
-                  if (data.result === 'OK') {
-                    navigateTo('/home');
-                  }
-                  else{ setErrorOccurred(true); }
+                setErrorMessage(data.data.message);
               })
               .catch(e => console.log(e));
     }
 
     return <>
         <section className='main'>
-          <form>
-            <div className="form-control">
-                <label htmlFor="groupname" className="form-label">groupname</label>
-                <input name="groupname" type="text" id="groupname" className="form-input" required
-                    value={formData.groupname} 
-                    onChange={(e) => setFormData({...formData, groupname: e.target.value})} />
-            </div>
-            <input name="createGroup" type="submit" value="Login" className="btn" onClick={createGroup}/>
-            <p className='error'>{errorOccurred? 'An Error Occurred' : ''}</p>
-          </form>
+          <div className='addGroup__form-container'>
+            <form>
+              <div className="form-control">
+                  <label htmlFor="groupname" className="form-label">Enter Group Name</label>
+                  <input name="groupname" type="text" id="groupname" className="form-input" minLength='2' maxLength='30' required
+                      value={formData.groupname} 
+                      onChange={(e) => setFormData({...formData, groupname: e.target.value})} />
+              </div>
+              <input name="createGroup" type="submit" value="Create Group" className="btn" onClick={createGroup}/>
+              <p className='addGroup__form-message'>{errorMessage}</p>
+            </form>
+          </div>
         </section>
     </>;
 }

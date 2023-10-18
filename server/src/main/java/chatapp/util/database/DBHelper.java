@@ -142,13 +142,13 @@ public class DBHelper {
     /**
      * Inserts a new address book entry into the 'address_book' table.
      *
-     * @param user_id The ID of the user in the address book entry.
-     * @param group_id The ID of the group in the address book entry.
+     * @param username The username of the user in the address book entry.
+     * @param groupname The groupname of the group in the address book entry.
      * @throws SQLException if a database access error occurs
      */
-    public static void createAddressBookEntry(int user_id, int group_id) throws SQLException {
-        String query = "INSERT INTO address_book(user_id, group_id) VALUES (?, ?)";
-        executeUpdateQuery(query, user_id, group_id);
+    public static void createAddressBookEntry(String username, String groupname) throws SQLException {
+        String query = "INSERT INTO address_book(username, group_name) VALUES (?, ?)";
+        executeUpdateQuery(query, username, groupname);
     }
 
     // ================================================================= READ ================================================================

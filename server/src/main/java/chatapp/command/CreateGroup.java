@@ -25,13 +25,14 @@ public class CreateGroup extends Command{
 
         try {
             for (String[] group : DBHelper.fetchAllGroups()) {
-                System.out.println(Arrays.toString(group));
                 if (group[1].equals(groupName)) return new BasicResponse("ERROR", "groupname is taken");
             }
             DBHelper.createGroup(groupName, username);
+            DBHelper.createAddressBookEntry(username, groupName);
             return new BasicResponse("OK", "group created successfully");
         } catch (SQLException e) {
-            return new BasicResponse("OK", "Oops! Something went wrong while trying to create the group.");
+            System.out.println(e.getMessage());
+            return new BasicResponse("ERROR", "Oops! Something went wrong while trying to create the group.");
         }
     }
 }
