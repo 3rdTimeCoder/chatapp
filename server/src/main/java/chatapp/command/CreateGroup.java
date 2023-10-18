@@ -1,6 +1,7 @@
 package chatapp.command;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -23,6 +24,10 @@ public class CreateGroup extends Command{
         String groupName = args.get("groupname").asText();
 
         try {
+            for (String[] group : DBHelper.fetchAllGroups()) {
+                System.out.println(Arrays.toString(group));
+                if (group[1].equals(groupName)) return new BasicResponse("ERROR", "groupname is taken");
+            }
             DBHelper.createGroup(groupName, username);
             return new BasicResponse("OK", "group created successfully");
         } catch (SQLException e) {
