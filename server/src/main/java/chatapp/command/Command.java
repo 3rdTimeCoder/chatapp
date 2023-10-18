@@ -54,6 +54,8 @@ public abstract class Command {
                 return new EditMessage(args);
             case "get_user":
                 return new GetUser(args);
+            case "create_group":
+                return new CreateGroup(args);
             default:
                 throw new IllegalArgumentException("Uknown request: " + command);
         }
