@@ -116,12 +116,12 @@ public class DBHelper {
      * Inserts a new group into the 'groups' table.
      *
      * @param name The name of the new group.
-     * @param creatorID The ID of the user who created the group.
+     * @param creatorUsername The username of the user who created the group.
      * @throws SQLException if a database access error occurs
      */
-    public static void createGroup(String name, int creatorID) throws SQLException {
-        String query = "INSERT INTO groups(group_name, creator_id, date_created) VALUES (?, ?, datetime('now'))";
-        executeUpdateQuery(query, name, creatorID);
+    public static void createGroup(String name, String creatorUsername) throws SQLException {
+        String query = "INSERT INTO groups(group_name, creator_username, date_created) VALUES (?, ?, datetime('now'))";
+        executeUpdateQuery(query, name, creatorUsername);
     }
 
     /**

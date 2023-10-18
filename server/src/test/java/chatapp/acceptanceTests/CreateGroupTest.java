@@ -35,7 +35,7 @@ public class CreateGroupTest {
     void createGroup(){
         String reqString = "{" +
             "\"username\":\"admin\"," +
-            "\"groupname\":\"NewGroup\"," +
+            "\"groupname\":\"NewGroup\"" +
         "}";
 
         HttpResponse<JsonNode> response = Unirest.post("http://localhost:5050/v1/groups/createGroup").body(reqString).asJson(); 
