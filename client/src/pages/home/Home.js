@@ -44,23 +44,6 @@ const Home = () => {
         .catch(e => console.log(e));
     }
 
-    // const getAllGroup = (e) => {
-    //   e.preventDefault();
-    //   fetch(`${config.base_api_url}/groups`, config.options)
-    //           .then(response => response.json())
-    //           .then(data => {
-    //             console.log('test', data.data.groups);
-    //             if(data.result === 'OK') {
-    //               setAllGroups(data.data.groups);
-    //               console.log('allGroups after setting them: ', allGroups);
-    //               setMain('allGroups');
-    //             }
-    //           })
-    //           .catch(e => console.log(e));
-    // }
-
-
-
     return <>
       {/* <Navbar/> */}
       <nav>
@@ -71,7 +54,7 @@ const Home = () => {
               fetchGroups();
               setMain('home');
             }} title='Home'/>
-            <FaSolarPanel className='nav-icon' title='All Groups' onClick={() => setMain('allGroups')}/>
+            <FaSolarPanel className='nav-icon' title='Discover Groups' onClick={() => setMain('allGroups')}/>
             <FaPlus className='nav-icon' onClick={() => setMain('addGroup')} title='Add Group'/>
             <FaSearch className='nav-icon' title='Search'/>
             <FaPowerOff className='nav-icon' onClick={logout} title='Logout'/>
@@ -98,7 +81,7 @@ const Home = () => {
 
         { main === 'home'? 
             <MessagesContainer {...{currentGroup, user}} /> : 
-              main === 'addGroup'? <AddGroups {...{user}} /> : <AllGroups {...{user}} />
+              main === 'addGroup'? <AddGroups {...{user}} /> : <AllGroups {...{user, groups}} />
         }
       </div>
     </>;
