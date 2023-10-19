@@ -334,6 +334,17 @@ public class DBHelper {
         executeUpdateQuery(query, username);
     }
 
+    /**
+     * Deletes a user from the database.
+     *
+     * @param messageId The ID of the message to delete.
+     * @throws SQLException if a database access error occurs
+     */
+    public static void deleteMessage(int messageId) throws SQLException {
+        String query = "DELETE FROM messages WHERE message_id = ?";
+        executeUpdateQuery(query, messageId);
+    }
+
     // ============================================================ HELPER METHODS ==========================================================
 
     /**

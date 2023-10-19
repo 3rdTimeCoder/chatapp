@@ -3,7 +3,7 @@ import './messagesContainer.css';
 import config from '../../config/Config';
 
 
-const MessagesContainer = ({currentGroup, user}) => {
+const MessagesContainer = ({ currentGroup, user }) => {
     const [currentGroupMessages, setCurrentGroupMessages] = useState([]);
     const [textToSend, setTextToSend] = useState('');
     const messagesContainerRef = useRef(null);
@@ -17,6 +17,7 @@ const MessagesContainer = ({currentGroup, user}) => {
             if (data.result === 'OK') {
               const messages = JSON.parse(data.data.messages);
               setCurrentGroupMessages(messages);
+              // console.log(currentGroupMessages);
             }
           })
           .catch(e => console.log(e));
@@ -62,8 +63,25 @@ const MessagesContainer = ({currentGroup, user}) => {
               .catch(e => console.log(e));
     }
 
-    const deletMessage = (e) => {
-      console.log('Delete message:', e.target)
+    const deletMessage = (messageId) => {
+      // console.log('Delete message:', e.target)
+      console.log('messageId:', messageId);
+      const formData = {
+        username: user.username,
+        messageId: messageId
+      }
+      const options = {...config.options, method: 'POST', body: JSON.stringify(formData)};
+
+      fetch(`${config.base_api_url}/groups/deleteMessage/${messageId}`, options)
+              .then(response => response.json())
+              .then(data => {
+                  // if (data.result === 'OK') {
+                  //   setTextToSend('');
+                  // }
+                  console.log(data);
+              })
+              .catch(e => console.log(e));
+
     }
 
 
@@ -82,7 +100,8 @@ const MessagesContainer = ({currentGroup, user}) => {
                     <p>{message.date_sent}</p>
                   </div>
                   <div className='right'>
-                    {message.sender_name === user.username? <p className='delete-message' onClick={deletMessage}>Delete</p> : ''}
+                    {message.sender_name === user.username? 
+                      <p className='delete-message' onClick={() => deletMessage(message.message_id)}>Delete</p> : ''}
                   </div>
                 </div>
                 <p className='message-body'>{message.message}</p>

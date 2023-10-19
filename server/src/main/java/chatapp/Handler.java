@@ -79,7 +79,7 @@ public class Handler {
         JSONObject args = new JSONObject();
         int messageId = context.pathParamAsClass("messageId", Integer.class).get();
         args.put("messageId", messageId);
-        String reqBody = createReqBody("delete_messages", args);
+        String reqBody = createReqBody("delete_message", args);
         String response = ClientHandler.handleClientRequest(reqBody);
         context.json(response);
     }
