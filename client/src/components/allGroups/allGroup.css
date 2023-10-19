@@ -1,0 +1,29 @@
+.main .container {
+    /* overflow-y: auto;
+    width: 96%; */
+    height: 88vh;
+    /* padding: 8px 1.5rem;
+    padding-bottom: 10px; */
+}
+
+.group {
+    padding: 1rem;
+    background-color: antiquewhite;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 0px;
+    color: #24233c;
+    padding-left: 20px;
+    box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+    -moz-box-shadow: 16px 10px 133px -15px rgba(0,0,0,0.29);
+}
+
+.group p {
+    font-size: 12px;
+}
+
+.join-btn {
+    margin-top: 10px;
+    font-size: 14px;
+}

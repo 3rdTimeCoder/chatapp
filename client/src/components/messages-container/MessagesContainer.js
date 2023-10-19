@@ -78,7 +78,7 @@ const MessagesContainer = ({ currentGroup, user }) => {
                   // if (data.result === 'OK') {
                   //   setTextToSend('');
                   // }
-                  console.log(data);
+                  // console.log(data);
               })
               .catch(e => console.log(e));
 

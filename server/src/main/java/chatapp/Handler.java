@@ -120,5 +120,11 @@ public class Handler {
         context.json(response);
     }
 
+    public static void joinGroup(Context context) {
+        String reqBody = createReqBody("join_group", context);
+        String response = ClientHandler.handleClientRequest(reqBody);
+        context.json(response);
+    }
+
 } 
 

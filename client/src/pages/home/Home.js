@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import config from '../../config/Config';
 import MessagesContainer from '../../components/messages-container/MessagesContainer';
+import AllGroups from '../../components/allGroups/AllGroup';
 import Navbar from '../../components/navbar/Navbar';
 import AddGroups from '../../components/addGroup/AddGroup';
 import { FaPlus } from "react-icons/fa";
@@ -23,14 +24,6 @@ const Home = () => {
 
     useEffect(()=>{
       fetchGroups();
-      // fetch(`${config.base_api_url}/groups/${user.username}`, config.options)
-      //         .then(response => response.json())
-      //         .then(data => {
-      //             console.log(data.data.groups);
-      //             setGroups(data.data.groups);
-      //             setCurrentGroup(data.data.groups[0]);
-      //         })
-      //         .catch(e => console.log(e));
     }, []);
 
     const navigateTo = useNavigate();
@@ -51,6 +44,22 @@ const Home = () => {
         .catch(e => console.log(e));
     }
 
+    // const getAllGroup = (e) => {
+    //   e.preventDefault();
+    //   fetch(`${config.base_api_url}/groups`, config.options)
+    //           .then(response => response.json())
+    //           .then(data => {
+    //             console.log('test', data.data.groups);
+    //             if(data.result === 'OK') {
+    //               setAllGroups(data.data.groups);
+    //               console.log('allGroups after setting them: ', allGroups);
+    //               setMain('allGroups');
+    //             }
+    //           })
+    //           .catch(e => console.log(e));
+    // }
+
+
 
     return <>
       {/* <Navbar/> */}
@@ -62,7 +71,7 @@ const Home = () => {
               fetchGroups();
               setMain('home');
             }} title='Home'/>
-            <FaSolarPanel className='nav-icon' title='All Groups'/>
+            <FaSolarPanel className='nav-icon' title='All Groups' onClick={() => setMain('allGroups')}/>
             <FaPlus className='nav-icon' onClick={() => setMain('addGroup')} title='Add Group'/>
             <FaSearch className='nav-icon' title='Search'/>
             <FaPowerOff className='nav-icon' onClick={logout} title='Logout'/>
@@ -88,8 +97,8 @@ const Home = () => {
         </section>
 
         { main === 'home'? 
-            <MessagesContainer {...{currentGroup, user}}/> : 
-            <AddGroups {...{user}}/>
+            <MessagesContainer {...{currentGroup, user}} /> : 
+              main === 'addGroup'? <AddGroups {...{user}} /> : <AllGroups {...{user}} />
         }
       </div>
     </>;
