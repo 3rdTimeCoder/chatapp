@@ -17,10 +17,8 @@ const AddGroups = ({user, groups}) => {
       fetch(`${config.base_api_url}/groups`, config.options)
               .then(response => response.json())
               .then(data => {
-                // console.log('test', data.data.groups);
                 if(data.result === 'OK') {
                   setAllGroups(data.data.groups);
-                  // console.log('allGroups after setting them: ', allGroups);
                 }
               })
               .catch(e => console.log(e));
@@ -41,18 +39,21 @@ const AddGroups = ({user, groups}) => {
                 // console.log(data);
                 if(data.result === 'OK') {
                   e.target.disabled = true;
-                  // make it fetch the groups again.
+                  e.target.text = "Joined";
                 }
               })
               .catch(e => console.log(e));
     }
 
     const inUserGroups = (group) => {
+      console.log("groups: " + groups);
+      console.log("group: " + group);
       groups.forEach(userGroup => {
         console.log('userGroup: ', userGroup, 'groupPendingDisplay: ', group[1])
         console.log(userGroup === group[1]);
         if (userGroup === group[1]) return true;
-      });
+      }
+      );
       return false;
     }
 
@@ -60,7 +61,12 @@ const AddGroups = ({user, groups}) => {
         <section className='main'>
           <div className='container'>
             {allGroups.map(group => (
-              inUserGroups(group)? '' :
+              groups.includes(group[1])? 
+                <article className='group'  key={group[0]}>
+                  <h3>{group[1]}</h3>
+                  <button type='btn' id={group[1]} className='btn join-btn' disabled>Joined</button>
+                </article>
+                :
                 <article className='group'  key={group[0]}>
                   <h3>{group[1]}</h3>
                   <button type='submit' id={group[1]} className='btn join-btn' onClick={joinGroup}>Join Room</button>
