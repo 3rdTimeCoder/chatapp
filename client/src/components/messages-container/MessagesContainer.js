@@ -10,13 +10,8 @@ const MessagesContainer = ({ currentGroup, user }) => {
     const messagesContainerRef = useRef(null);
 
     useEffect(()=>{
-      console.log("text: " + textToSend)
-    }, [textToSend])
-
-
-    useEffect(()=>{
-      const fetchMessages = () => {
-        fetch(`${config.base_api_url}/groups/getMessages/${currentGroup}`, config.options)
+      const fetchMessages = async () => {
+        await fetch(`${config.base_api_url}/groups/getMessages/${currentGroup}`, config.options)
           .then(response => response.json())
           .then(data => {
             if (data.result === 'OK') {
