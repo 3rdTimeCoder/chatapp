@@ -43,7 +43,7 @@ const MessagesContainer = ({ currentGroup, user }) => {
 
 
     const sendMessage = (e) => {
-      e.preventDefault();
+      // e.preventDefault();
 
       const formData = {
         username: user.username,
