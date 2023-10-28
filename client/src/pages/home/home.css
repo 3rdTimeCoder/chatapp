@@ -228,14 +228,15 @@ nav .logout-btn:hover {
 
 .rooms::-webkit-scrollbar,
 .messages::-webkit-scrollbar {
-    width: 8px;
+    width: 8px !important;
   }
 .rooms::-webkit-scrollbar-track,
 .messages::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent !important; 
   }
 .rooms::-webkit-scrollbar-thumb,
 .messages::-webkit-scrollbar-thumb {
     background: #24233c;
-    border-radius: 8px;
+    border-radius: 8px !important;
   }
+  

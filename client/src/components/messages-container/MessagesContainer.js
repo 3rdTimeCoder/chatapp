@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './messagesContainer.css';
 import config from '../../config/Config';
+import InputEmoji from 'react-input-emoji';
+import './messagesContainer.css';
 
 
 const MessagesContainer = ({ currentGroup, user }) => {
     const [currentGroupMessages, setCurrentGroupMessages] = useState([]);
     const [textToSend, setTextToSend] = useState('');
     const messagesContainerRef = useRef(null);
+
+    useEffect(()=>{
+      console.log("text: " + textToSend)
+    }, [textToSend])
 
 
     useEffect(()=>{
@@ -17,7 +22,6 @@ const MessagesContainer = ({ currentGroup, user }) => {
             if (data.result === 'OK') {
               const messages = JSON.parse(data.data.messages);
               setCurrentGroupMessages(messages);
-              // console.log(currentGroupMessages);
             }
           })
           .catch(e => console.log(e));
@@ -112,9 +116,13 @@ const MessagesContainer = ({ currentGroup, user }) => {
           <div className='text-box-wrapper'>
             <div className='text-box'>
               <form>
-                <textarea className='input-box box-shadow' placeholder='type your message...' 
-                  value={textToSend} onChange={e => setTextToSend(e.target.value)}></textarea>
-                <input type='submit' value='&gt;' className='send-btn' onClick={sendMessage} />
+                <InputEmoji 
+                  className='input-box box-shadow' 
+                  placeholder='Type a message...' 
+                  value={textToSend} 
+                  onChange={setTextToSend} 
+                  onEnter={sendMessage}
+                />
               </form>
             </div>
           </div>
