@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { FaTrash, FaTrashAlt } from "react-icons/fa";
 import config from '../../config/Config';
 import InputEmoji from 'react-input-emoji';
 import './messagesContainer.css';
@@ -7,22 +8,37 @@ import './messagesContainer.css';
 const MessagesContainer = ({ currentGroup, user }) => {
     const [currentGroupMessages, setCurrentGroupMessages] = useState([]);
     const [textToSend, setTextToSend] = useState('');
+    const [groupMembers, setGroupMembers] = useState([]);
+    const [groupMemberCount, setGroupMemberCount] = useState('');
     const messagesContainerRef = useRef(null);
 
+    const fetchMessages = async () => {
+      await fetch(`${config.base_api_url}/groups/getMessages/${currentGroup}`, config.options)
+        .then(response => response.json())
+        .then(data => {
+          if (data.result === 'OK') {
+            const messages = JSON.parse(data.data.messages);
+            setCurrentGroupMessages(messages);
+          }
+        })
+        .catch(e => console.log(e));
+    };
+
+    const fetchGroupMembers = async () => {
+      await fetch(`${config.base_api_url}/groups/getMembers/${currentGroup}`, config.options)
+        .then(response => response.json())
+        .then(data => {
+          if (data.result === 'OK') {
+            setGroupMembers(data.data.members);
+            setGroupMemberCount(data.data.member_count);
+          }
+        })
+        .catch(e => console.log(e));
+    };
+
     useEffect(()=>{
-      const fetchMessages = async () => {
-        await fetch(`${config.base_api_url}/groups/getMessages/${currentGroup}`, config.options)
-          .then(response => response.json())
-          .then(data => {
-            if (data.result === 'OK') {
-              const messages = JSON.parse(data.data.messages);
-              setCurrentGroupMessages(messages);
-            }
-          })
-          .catch(e => console.log(e));
-      };
-  
       // Fetch messages initially when the component mounts
+      fetchGroupMembers();
       fetchMessages();
       scrollDown();
   
@@ -35,6 +51,8 @@ const MessagesContainer = ({ currentGroup, user }) => {
       };
     }, [currentGroup]);
 
+    
+
     const scrollDown = () => {
       if (messagesContainerRef.current) {
         messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -43,8 +61,6 @@ const MessagesContainer = ({ currentGroup, user }) => {
 
 
     const sendMessage = (e) => {
-      // e.preventDefault();
-
       const formData = {
         username: user.username,
         groupname: currentGroup,
@@ -63,8 +79,6 @@ const MessagesContainer = ({ currentGroup, user }) => {
     }
 
     const deletMessage = (messageId) => {
-      // console.log('Delete message:', e.target)
-      console.log('messageId:', messageId);
       const formData = {
         username: user.username,
         messageId: messageId
@@ -73,22 +87,36 @@ const MessagesContainer = ({ currentGroup, user }) => {
 
       fetch(`${config.base_api_url}/groups/deleteMessage/${messageId}`, options)
               .then(response => response.json())
-              .then(data => {
-                  // if (data.result === 'OK') {
-                  //   setTextToSend('');
-                  // }
-                  // console.log(data);
-              })
+              .then(data => {})
               .catch(e => console.log(e));
 
     }
 
+    const leaveGroup = (e) => {
+      e.preventDefault();
+
+      const formData = {
+        username: user.username,
+        groupname: currentGroup
+      }
+      const options = {...config.options, method: 'POST', body: JSON.stringify(formData)};
+
+      fetch(`${config.base_api_url}/groups/leaveGroup`, options)
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+              })
+              .catch(e => console.log(e));
+    }
 
     return <>
         <section className='main'>
           <div className='info'>
             <h3>{currentGroup}</h3>
-            <p><span className='number'>234</span> members</p>
+            <p><span className='number'>{groupMemberCount}</span> members</p>
+            <form>
+              <input type="submit" id="leaveGroup" name="leaveGroup" value="Leave Group" onClick={(e) => leaveGroup(e)} />
+            </form>
           </div>
           <div className='messages' ref={messagesContainerRef}>
             {currentGroupMessages.map((message, index) => (
@@ -100,7 +128,7 @@ const MessagesContainer = ({ currentGroup, user }) => {
                   </div>
                   <div className='right'>
                     {message.sender_name === user.username? 
-                      <p className='delete-message' onClick={() => deletMessage(message.message_id)}>Delete</p> : ''}
+                      <p className='delete-message' onClick={() => deletMessage(message.message_id)}><FaTrash/></p> : ''}
                   </div>
                 </div>
                 <p className='message-body'>{message.message}</p>
