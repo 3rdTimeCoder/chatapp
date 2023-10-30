@@ -255,15 +255,28 @@ public class DBHelper {
      * @return A list of string arrays representing the user IDs or group IDs based on the specified condition.
      * @throws SQLException if a database access error occurs
      */
-    public static List<String> fetchAddressBook(String name, boolean userGroups) throws SQLException {
+    public static List<String[]> fetchAddressBook(String name, boolean userGroups) throws SQLException {
         String query = userGroups ?
-                "SELECT DISTINCT group_name FROM address_book WHERE username = ?" :
-                "SELECT DISTINCT username FROM address_book WHERE group_name = ?";
+                "SELECT groups.group_id, groups.group_name, groups.creator_username, groups.date_created, groups.description FROM groups\r\n" +
+                        "JOIN address_book ON address_book.group_name = groups.group_name\r\n" + 
+                        "WHERE address_book.username = ? AND groups.active = \"true\"" :
+                "SELECT users.user_id, users.username, users.date_joined, users.bio, users.display_img FROM users\r\n" + //
+                        "JOIN address_book ON address_book.username = users.username\r\n" + //
+                        "WHERE address_book.group_name = ?";
         List<String[]> result = executeSelectQuery(query, name);
-        List<String> structedResult = new ArrayList<>();
-        for (String[] res : result) structedResult.add(res[0]);
-        return structedResult;
+        // List<String> structedResult = new ArrayList<>();
+        // for (String[] res : result) structedResult.add(res[0]);
+        return result;
     }
+    // public static List<String> fetchAddressBook(String name, boolean userGroups) throws SQLException {
+    //     String query = userGroups ?
+    //             "SELECT DISTINCT group_name FROM address_book WHERE username = ?" :
+    //             "SELECT DISTINCT username FROM address_book WHERE group_name = ?";
+    //     List<String[]> result = executeSelectQuery(query, name);
+    //     List<String> structedResult = new ArrayList<>();
+    //     for (String[] res : result) structedResult.add(res[0]);
+    //     return structedResult;
+    // }
 
     /**
      * Fetches all messages sent to a specific group from the 'messages' table.
@@ -314,13 +327,13 @@ public class DBHelper {
     /**
      * Deletes an address book entry for a user in a group from the 'address_book' table.
      *
-     * @param user_id   The ID of the user in the address book entry.
-     * @param group_id  The ID of the group in the address book entry.
+     * @param username   The username of the user in the address book entry.
+     * @param groupname  The groupname of the group in the address book entry.
      * @throws SQLException if a database access error occurs
      */
-    public static void deleteAddressBookEntry(int user_id, int group_id) throws SQLException {
-        String query = "DELETE FROM address_book WHERE user_id = ? AND group_id = ?";
-        executeUpdateQuery(query, user_id, group_id);
+    public static void deleteAddressBookEntry(String username, String groupname) throws SQLException {
+        String query = "DELETE FROM address_book WHERE username = ? AND group_name = ?";
+        executeUpdateQuery(query, username, groupname);
     }
 
     /**
@@ -333,6 +346,18 @@ public class DBHelper {
         String query = "DELETE FROM users WHERE username = ?";
         executeUpdateQuery(query, username);
     }
+
+    // /**
+    //  * Deletes an entry from the database.
+    //  *
+    //  * @param username The username of the user to remove.
+    //  * @param groupname The username of the groupname to remove.
+    //  * @throws SQLException if a database access error occurs
+    //  */
+    // public static void deleteAddressBookEntry(String username, String groupname) throws SQLException {
+    //     String query = "DELETE FROM address_book WHERE username = ? AND groupname = ?";
+    //     executeUpdateQuery(query, username, groupname);
+    // }
 
     /**
      * Deletes a user from the database.

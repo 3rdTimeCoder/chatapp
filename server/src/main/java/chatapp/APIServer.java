@@ -1,7 +1,7 @@
 package chatapp;
 
 import io.javalin.Javalin;
-import io.javalin.http.staticfiles.Location;
+
 
 public class APIServer {
     private final Javalin server;
@@ -11,7 +11,6 @@ public class APIServer {
     public APIServer() {
         server = Javalin.create(config -> {
             config.defaultContentType = "application/json"; 
-            // config.addStaticFiles(PAGES_DIR, Location.CLASSPATH);
             config.enableCorsForAllOrigins();
         });
 
@@ -24,18 +23,16 @@ public class APIServer {
         this.server.post(urlPrefix + "/groups/deleteMessage/{messageId}", context -> Handler.deleteMessage(context));
         this.server.post(urlPrefix + "/groups/createGroup", context -> Handler.createGroup(context));
         this.server.post(urlPrefix + "/groups/joinGroup", context -> Handler.joinGroup(context));
+        this.server.post(urlPrefix + "/groups/leaveGroup", context -> Handler.leaveGroup(context));
+        this.server.get(urlPrefix + "/groups/getMembers/{groupname}", context -> Handler.getMembersInGroup(context));
         // this.server.post(urlPrefix + "/groups/editMessage/{messageId}", context -> Handler.editMessage(context));  
         this.server.get(urlPrefix + "/users/", context -> Handler.getUsers(context)); 
         this.server.get(urlPrefix + "/users/{username}", context -> Handler.getUser(context)); 
     }
 
-    public void start(int port) {
-        this.server.start(port);
-    }
+    public void start(int port) { this.server.start(port); }
 
-    public void stop() {
-        this.server.stop();
-    }
+    public void stop() { this.server.stop(); }
 
     public static void main(String[] args) {
         APIServer server = new APIServer();

@@ -58,6 +58,8 @@ public abstract class Command {
                 return new CreateGroup(args);
             case "join_group":
                 return new JoinGroup(args);
+            case "leave_group":
+                return new LeaveGroup(args);
             default:
                 throw new IllegalArgumentException("Uknown request: " + command);
         }

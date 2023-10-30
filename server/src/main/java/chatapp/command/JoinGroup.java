@@ -1,7 +1,6 @@
 package chatapp.command;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -24,8 +23,8 @@ public class JoinGroup extends Command{
         String groupName = args.get("groupname").asText();
 
         try {
-            for (String user : DBHelper.fetchAddressBook(groupName, false)) {
-                if (user.equals(groupName)) 
+            for (String[] user : DBHelper.fetchAddressBook(groupName, false)) {
+                if (user[1].equals(groupName)) 
                     return new BasicResponse("ERROR", "User" + username + " already joined the group " + groupName);
             }
             DBHelper.createAddressBookEntry(username, groupName);

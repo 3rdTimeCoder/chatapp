@@ -1,8 +1,6 @@
 package chatapp.command;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONObject;
 
@@ -13,6 +11,7 @@ import chatapp.communication.response.BasicResponse;
 import chatapp.communication.response.Data;
 import chatapp.communication.response.Response;
 import chatapp.util.database.DBHelper;
+import chatapp.util.database.Helpers;
 
 public class GetUser extends Command{
 
@@ -30,7 +29,7 @@ public class GetUser extends Command{
         JSONObject user = new JSONObject();
 
         try {
-            user = structureUser(DBHelper.fetchUser(username));
+            user = Helpers.structureUser(DBHelper.fetchUser(username));
         } 
         catch (SQLException e) {
             return new BasicResponse("ERROR", "An Error Occurred while fetching messages.");
@@ -40,14 +39,4 @@ public class GetUser extends Command{
         data.addToData("user", user.toString());
         return new Response("OK", data.getData());
     }
-
-    private JSONObject structureUser(String[] user) {
-        JSONObject structuredUser = new JSONObject();
-        structuredUser.put("user_id", user[0]);
-        structuredUser.put("username", user[1]);
-        structuredUser.put("email", user[2]);
-        structuredUser.put("date_joined", user[4]);
-        return structuredUser;
-    }
-    
 }

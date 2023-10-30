@@ -1,13 +1,16 @@
 package chatapp;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONObject;
 
 import chatapp.communication.response.BasicResponse;
 import chatapp.communication.response.Response;
 import chatapp.util.database.DBHelper;
+import chatapp.util.database.Helpers;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 
@@ -38,7 +41,11 @@ public class Handler {
     public static void getAllGroups(Context context) {
         try {
             HashMap<String, Object> data = new HashMap<>();
-            data.put("groups", DBHelper.fetchAllGroups());
+            List<JSONObject> structuredGroups = new ArrayList<>();
+            List<String[]> groups = DBHelper.fetchAllGroups();
+            for (String[] group : groups) structuredGroups.add(Helpers.structureGroup(group));
+            // data.put("groups", DBHelper.fetchAllGroups());
+            data.put("groups", structuredGroups.toString());
             context.json(new Response("OK", data));
         } 
         catch (SQLException e) { 
@@ -47,6 +54,10 @@ public class Handler {
         }
     }
 
+    /**
+     * Gets all groups the user is a member in.
+     * @param context
+     */
     public static void getUserGroups(Context context) {
         try {
             String username = context.pathParamAsClass("username", String.class).get();
@@ -57,6 +68,27 @@ public class Handler {
         catch (SQLException e) { 
             context.status(HttpCode.NOT_FOUND);
             context.json(new BasicResponse("ERROR", "An error occurred while fetching groups.")); 
+        }
+    }
+
+    /**
+     * Gets all members in a group.
+     */
+    public static void getMembersInGroup(Context context) {
+        try {
+            String groupname = context.pathParamAsClass("groupname", String.class).get();
+            HashMap<String, Object> data = new HashMap<>();
+            List<JSONObject> members = new ArrayList<>();
+            for (String[] member :  DBHelper.fetchAddressBook(groupname, false)) {
+                members.add(Helpers.structureUser(member));
+            }
+            data.put("members", members.toString());
+            data.put("member_count", members.size());
+            context.json(new Response("OK", data));
+        } 
+        catch (SQLException e) { 
+            context.status(HttpCode.NOT_FOUND);
+            context.json(new BasicResponse("ERROR", "An error occurred while fetching memebers.")); 
         }
     }
 
@@ -107,8 +139,8 @@ public class Handler {
 
     public static void getUser(Context context) {
         JSONObject args = new JSONObject();
-        String groupname = context.pathParamAsClass("username", String.class).get();
-        args.put("username", groupname);
+        String username = context.pathParamAsClass("username", String.class).get();
+        args.put("username", username);
         String reqBody = createReqBody("get_user", args);
         String response = ClientHandler.handleClientRequest(reqBody);
         context.json(response);
@@ -122,6 +154,12 @@ public class Handler {
 
     public static void joinGroup(Context context) {
         String reqBody = createReqBody("join_group", context);
+        String response = ClientHandler.handleClientRequest(reqBody);
+        context.json(response);
+    }
+
+    public static void leaveGroup(Context context) {
+        String reqBody = createReqBody("leave_group", context);
         String response = ClientHandler.handleClientRequest(reqBody);
         context.json(response);
     }
