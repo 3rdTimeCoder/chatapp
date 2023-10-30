@@ -114,7 +114,7 @@ const MessagesContainer = ({ currentGroup, user }) => {
           <div className='info'>
             <h3>{currentGroup}</h3>
             <p><span className='number'>{groupMemberCount}</span> members</p>
-            <form>
+            <form id="leaveGroupForm">
               <input type="submit" id="leaveGroup" name="leaveGroup" value="Leave Group" onClick={(e) => leaveGroup(e)} />
             </form>
           </div>

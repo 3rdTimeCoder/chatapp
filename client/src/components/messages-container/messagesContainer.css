@@ -1,5 +1,5 @@
 .main {
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
 
 .main .info {
     text-align: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 .main .info .number {
     font-size: 11px;
@@ -84,7 +84,7 @@
 
 .text-box-wrapper {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     width: 95%;
     z-index: 100;
     margin: 0 auto;
@@ -128,4 +128,20 @@
     width: 37px;
     border-radius: 50%;
     border: antiquewhite 1px solid;
+}
+
+#leaveGroup {
+    border: none;
+    outline: none;
+    color: antiquewhite;
+    background-color: #24233c;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#leaveGroupForm {
+    margin: 0;
+    padding: 0;
+    height: fit-content;
 }

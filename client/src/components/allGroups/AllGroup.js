@@ -18,7 +18,8 @@ const AddGroups = ({user, groups}) => {
               .then(response => response.json())
               .then(data => {
                 if(data.result === 'OK') {
-                  setAllGroups(data.data.groups);
+                  console.log(JSON.parse(data.data.groups));
+                  setAllGroups(JSON.parse(data.data.groups));
                 }
               })
               .catch(e => console.log(e));
@@ -46,14 +47,9 @@ const AddGroups = ({user, groups}) => {
     }
 
     const inUserGroups = (group) => {
-      console.log("groups: " + groups);
-      console.log("group: " + group);
-      groups.forEach(userGroup => {
-        console.log('userGroup: ', userGroup, 'groupPendingDisplay: ', group[1])
-        console.log(userGroup === group[1]);
-        if (userGroup === group[1]) return true;
+      for (const userGroup of groups) {
+        if (userGroup.groupname === group.groupname) return true;
       }
-      );
       return false;
     }
 
@@ -61,15 +57,19 @@ const AddGroups = ({user, groups}) => {
         <section className='main'>
           <div className='container'>
             {allGroups.map(group => (
-              groups.includes(group[1])? 
+              inUserGroups(group)? 
                 <article className='group'  key={group[0]}>
-                  <h3>{group[1]}</h3>
-                  <button type='btn' id={group[1]} className='btn join-btn' disabled>Joined</button>
+                  <h3>{group.groupname}</h3>
+                  <p>&lt; {group.description} /&gt;</p>
+                  <p>~created by <span className='creator'>@{group.creator}</span></p>
+                  <button type='btn' id={group.groupId} className='btn join-btn' disabled>Joined</button>
                 </article>
                 :
-                <article className='group'  key={group[0]}>
-                  <h3>{group[1]}</h3>
-                  <button type='submit' id={group[1]} className='btn join-btn' onClick={joinGroup}>Join Room</button>
+                <article className='group'  key={group.groupId}>
+                  <h3>{group.groupname}</h3>
+                  <p>&lt; {group.description} /&gt;</p>
+                  <p>~created by <span className='creator'>@{group.creator}</span></p>
+                  <button type='submit' id={group.groupname} className='btn join-btn' onClick={joinGroup}>Join Room</button>
                 </article>
             ))}
           </div>
