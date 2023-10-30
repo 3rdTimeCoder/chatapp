@@ -62,7 +62,10 @@ public class Handler {
         try {
             String username = context.pathParamAsClass("username", String.class).get();
             HashMap<String, Object> data = new HashMap<>();
-            data.put("groups", DBHelper.fetchAddressBook(username, true));
+            List<JSONObject> structuredGroups = new ArrayList<>();
+            List<String[]> groups =  DBHelper.fetchAddressBook(username, true);
+            for (String[] group : groups) structuredGroups.add(Helpers.structureGroup(group));
+            data.put("groups", structuredGroups.toString());
             context.json(new Response("OK", data));
         } 
         catch (SQLException e) { 
@@ -84,6 +87,7 @@ public class Handler {
             }
             data.put("members", members.toString());
             data.put("member_count", members.size());
+            System.out.println("member count: " + members.size());
             context.json(new Response("OK", data));
         } 
         catch (SQLException e) { 

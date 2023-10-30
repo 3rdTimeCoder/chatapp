@@ -1,5 +1,7 @@
 package chatapp.util.database;
 
+import java.util.Arrays;
+
 import org.json.JSONObject;
 
 public class Helpers {
@@ -17,13 +19,14 @@ public class Helpers {
     }
 
     public static JSONObject structureUser(String[] user) {
+        System.out.println("user: " + Arrays.toString(user));
         JSONObject structuredUser = new JSONObject();
         structuredUser.put("user_id", user[0]);
         structuredUser.put("username", user[1]);
         structuredUser.put("email", user[2]);
         structuredUser.put("date_joined", user[4]);
         structuredUser.put("bio", user[5]);
-        structuredUser.put("display_img", user[6]);
+        // structuredUser.put("display_img", user[6]);
         return structuredUser;
     }
 }

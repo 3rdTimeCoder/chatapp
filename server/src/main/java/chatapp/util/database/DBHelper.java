@@ -260,7 +260,7 @@ public class DBHelper {
                 "SELECT groups.group_id, groups.group_name, groups.creator_username, groups.date_created, groups.description, groups.active, groups.display_img FROM groups\r\n" +
                         "JOIN address_book ON address_book.group_name = groups.group_name\r\n" + 
                         "WHERE address_book.username = ? AND groups.active = \"true\"" :
-                "SELECT users.user_id, users.username, users.email, users.date_joined, users.bio, users.display_img FROM users\r\n" + //
+                "SELECT users.user_id, users.username, users.email, users.password, users.date_joined, users.bio, users.display_img FROM users\r\n" + //
                         "JOIN address_book ON address_book.username = users.username\r\n" + //
                         "WHERE address_book.group_name = ?";
         List<String[]> result = executeSelectQuery(query, name);
