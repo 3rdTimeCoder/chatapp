@@ -22,12 +22,13 @@ public class CreateGroup extends Command{
     public Response execute(ClientHandler clientHandler) {
         String username = args.get("username").asText();
         String groupName = args.get("groupname").asText();
+        String groupDesc = args.get("groupDescription").asText();
 
         try {
             for (String[] group : DBHelper.fetchAllGroups()) {
                 if (group[1].equals(groupName)) return new BasicResponse("ERROR", "groupname is taken");
             }
-            DBHelper.createGroup(groupName, username);
+            DBHelper.createGroup(groupName, groupDesc, username);
             DBHelper.createAddressBookEntry(username, groupName);
             return new BasicResponse("OK", "group created successfully");
         } catch (SQLException e) {

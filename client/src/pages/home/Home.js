@@ -38,6 +38,7 @@ const Home = () => {
         .then(response => response.json())
         .then(data => {
             let resp = JSON.parse(data.data.groups);
+            console.log(groups);
             setGroups(resp);
             setCurrentGroup(resp[0].groupname);
         })

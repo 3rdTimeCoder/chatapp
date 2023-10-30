@@ -19,7 +19,6 @@ public class Helpers {
     }
 
     public static JSONObject structureUser(String[] user) {
-        System.out.println("user: " + Arrays.toString(user));
         JSONObject structuredUser = new JSONObject();
         structuredUser.put("user_id", user[0]);
         structuredUser.put("username", user[1]);

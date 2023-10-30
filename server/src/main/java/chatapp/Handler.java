@@ -87,7 +87,6 @@ public class Handler {
             }
             data.put("members", members.toString());
             data.put("member_count", members.size());
-            System.out.println("member count: " + members.size());
             context.json(new Response("OK", data));
         } 
         catch (SQLException e) { 
